@@ -1,2 +1,4 @@
 # gemini-adk-study-coach-lab
-Build a multi-agent AI study coach with Gemini and Google ADK that creates personalized study plans, identifies key topics, and generates practice quizzes.
+
+> Gemini ADK Study Coach Lab — Build Your First Multi-Agent AI Application
+This positions the repository as a hands-on, open-source educational project for GDG DevFest workshops, with a working 14-day AI certification study-coach demo.
