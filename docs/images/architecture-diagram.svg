@@ -1,0 +1,268 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#090d16"/>
+    </linearGradient>
+    
+    <linearGradient id="userGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+
+    <linearGradient id="uiGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#17143a"/>
+    </linearGradient>
+
+    <linearGradient id="workflowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2e1065"/>
+      <stop offset="100%" stop-color="#1e0a45"/>
+    </linearGradient>
+
+    <linearGradient id="agentClusterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917"/>
+      <stop offset="100%" stop-color="#0c0a09"/>
+    </linearGradient>
+
+    <linearGradient id="coordGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78350f"/>
+      <stop offset="100%" stop-color="#451a03"/>
+    </linearGradient>
+
+    <linearGradient id="agentGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="geminiGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#172554"/>
+    </linearGradient>
+
+    <linearGradient id="curricGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#022c22"/>
+    </linearGradient>
+
+    <linearGradient id="resourceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#134e4a"/>
+      <stop offset="100%" stop-color="#042f2e"/>
+    </linearGradient>
+
+    <linearGradient id="telemetryGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a044e"/>
+      <stop offset="100%" stop-color="#2e0234"/>
+    </linearGradient>
+
+    <!-- Arrow Markers -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+
+    <!-- Filter for soft card shadows -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 700; fill: #f8fafc; }
+    .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 400; fill: #94a3b8; }
+    .section-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .card-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 600; fill: #f8fafc; }
+    .card-subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 400; fill: #cbd5e1; }
+    .badge { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; font-size: 10px; font-weight: 500; }
+    .label-accent { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 10.5px; font-weight: 500; fill: #94a3b8; }
+  </style>
+
+  <!-- Background Canvas -->
+  <rect width="1000" height="720" rx="16" fill="url(#bgGradient)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <g transform="translate(40, 36)">
+    <circle cx="14" cy="14" r="10" fill="#38bdf8" opacity="0.2"/>
+    <circle cx="14" cy="14" r="5" fill="#38bdf8"/>
+    <text x="36" y="16" class="title">Gemini + Google ADK Multi-Agent Study Coach</text>
+    <text x="36" y="32" class="subtitle">Production Multi-Agent Architecture • Deterministic Verification • Adaptive Remediation</text>
+  </g>
+
+  <!-- 1. Student / Browser Layer -->
+  <g transform="translate(370, 78)" filter="url(#cardShadow)">
+    <rect width="260" height="46" rx="23" fill="url(#userGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="130" y="24" text-anchor="middle" class="card-title">Student / Web Browser</text>
+    <text x="130" y="38" text-anchor="middle" class="card-subtitle">Streamlit Web Application • Port 8501</text>
+  </g>
+
+  <!-- Flow Arrow: Student -> UI -->
+  <line x1="500" y1="124" x2="500" y2="148" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 2. Presentation Layer: Streamlit UI & WorkshopFacade -->
+  <g transform="translate(180, 150)" filter="url(#cardShadow)">
+    <rect width="640" height="74" rx="12" fill="url(#uiGrad)" stroke="#6366f1" stroke-width="1.5"/>
+    <text x="20" y="22" class="section-title" fill="#818cf8">Presentation Layer &amp; UI Decoupling</text>
+    
+    <!-- Sub-box: Streamlit Tabs -->
+    <rect x="20" y="32" width="370" height="32" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="30" y="52" class="card-title" font-size="12px">Streamlit Tabs: <tspan fill="#38bdf8">Plan</tspan> • <tspan fill="#a78bfa">Learn</tspan> • <tspan fill="#34d399">Quiz</tspan> • <tspan fill="#f43f5e">Agent Ops</tspan> • <tspan fill="#fbbf24">Evals</tspan></text>
+    
+    <!-- Sub-box: WorkshopFacade -->
+    <rect x="405" y="32" width="215" height="32" rx="6" fill="#312e81" stroke="#818cf8" stroke-width="1"/>
+    <text x="512" y="52" text-anchor="middle" class="card-title" font-size="12px">WorkshopFacade Service</text>
+  </g>
+
+  <!-- Flow Arrow: Presentation -> Orchestration -->
+  <line x1="500" y1="224" x2="500" y2="248" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 3. Workflow & Deterministic Validation Layer -->
+  <g transform="translate(100, 250)" filter="url(#cardShadow)">
+    <rect width="800" height="76" rx="12" fill="url(#workflowGrad)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="20" y="22" class="section-title" fill="#c084fc">Workflow &amp; Deterministic Engine</text>
+
+    <!-- Adaptive Study Workflow -->
+    <g transform="translate(20, 32)">
+      <rect width="250" height="34" rx="6" fill="#1e1b4b" stroke="#7e22ce" stroke-width="1"/>
+      <text x="125" y="18" text-anchor="middle" class="card-title" font-size="12px">AdaptiveStudyWorkflow</text>
+      <text x="125" y="29" text-anchor="middle" class="badge" fill="#a78bfa">Transition &amp; Invariant Guard</text>
+    </g>
+
+    <!-- Deterministic Grading Engine -->
+    <g transform="translate(285, 32)">
+      <rect width="245" height="34" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+      <text x="122" y="18" text-anchor="middle" class="card-title" font-size="12px">Deterministic Python Grading</text>
+      <text x="122" y="29" text-anchor="middle" class="badge" fill="#34d399">Pure Python • Zero Hallucination</text>
+    </g>
+
+    <!-- Learning Session Service -->
+    <g transform="translate(545, 32)">
+      <rect width="235" height="34" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
+      <text x="117" y="18" text-anchor="middle" class="card-title" font-size="12px">LearningSessionService</text>
+      <text x="117" y="29" text-anchor="middle" class="badge" fill="#94a3b8">ADK InMemorySessionService</text>
+    </g>
+  </g>
+
+  <!-- Flow Arrow: Workflow -> Agent Core -->
+  <line x1="500" y1="326" x2="500" y2="350" stroke="#c084fc" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 4. Google ADK Multi-Agent Core Engine -->
+  <g transform="translate(50, 352)" filter="url(#cardShadow)">
+    <rect width="900" height="175" rx="12" fill="url(#agentClusterGrad)" stroke="#d97706" stroke-width="1.5"/>
+    <text x="24" y="24" class="section-title" fill="#fbbf24">Google Agent Development Kit (ADK) Multi-Agent Core</text>
+
+    <!-- Root Coordinator Agent -->
+    <g transform="translate(24, 38)">
+      <rect width="210" height="120" rx="8" fill="url(#coordGrad)" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="105" y="22" text-anchor="middle" class="card-title">Study Coach Coordinator</text>
+      <text x="105" y="36" text-anchor="middle" class="badge" fill="#fde68a">Root Delegator Agent</text>
+      <line x1="15" y1="46" x2="195" y2="46" stroke="#b45309" stroke-width="1"/>
+      <text x="20" y="64" class="card-subtitle">• Intent recognition</text>
+      <text x="20" y="80" class="card-subtitle">• Delegation router</text>
+      <text x="20" y="96" class="card-subtitle">• Execution trace bridge</text>
+      <text x="20" y="112" class="badge" fill="#fbbf24">Tool: invoke_agent</text>
+    </g>
+
+    <!-- Delegation Arrows from Coordinator to Specialist Agents -->
+    <path d="M 234 85 L 255 85" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrow-amber)"/>
+
+    <!-- Specialist 1: Study Planner Agent -->
+    <g transform="translate(255, 38)">
+      <rect width="205" height="120" rx="8" fill="url(#agentGrad)" stroke="#38bdf8" stroke-width="1"/>
+      <text x="102" y="22" text-anchor="middle" class="card-title">Study Planner Agent</text>
+      <text x="102" y="36" text-anchor="middle" class="badge" fill="#7dd3fc">Sequential Schedule Builder</text>
+      <line x1="15" y1="46" x2="190" y2="46" stroke="#334155" stroke-width="1"/>
+      <text x="16" y="64" class="card-subtitle">• Daily time limits (≤ N min)</text>
+      <text x="16" y="80" class="card-subtitle">• Deadline calendar layout</text>
+      <text x="16" y="96" class="card-subtitle">• Output: StudyPlan model</text>
+      <text x="16" y="112" class="badge" fill="#38bdf8">Tool: validate_study_plan</text>
+    </g>
+
+    <!-- Specialist 2: Topic Expert Agent -->
+    <g transform="translate(475, 38)">
+      <rect width="205" height="120" rx="8" fill="url(#agentGrad)" stroke="#a78bfa" stroke-width="1"/>
+      <text x="102" y="22" text-anchor="middle" class="card-title">Topic Expert Agent</text>
+      <text x="102" y="36" text-anchor="middle" class="badge" fill="#c4b5fd">Pedagogical Concept Teacher</text>
+      <line x1="15" y1="46" x2="190" y2="46" stroke="#334155" stroke-width="1"/>
+      <text x="16" y="64" class="card-subtitle">• Beginner/Interm/Adv depth</text>
+      <text x="16" y="80" class="card-subtitle">• GCP architecture scenarios</text>
+      <text x="16" y="96" class="card-subtitle">• Code demos &amp; diagrams</text>
+      <text x="16" y="112" class="badge" fill="#a78bfa">Tool: get_topic_by_id</text>
+    </g>
+
+    <!-- Specialist 3: Quiz Generator Agent -->
+    <g transform="translate(695, 38)">
+      <rect width="180" height="120" rx="8" fill="url(#agentGrad)" stroke="#34d399" stroke-width="1"/>
+      <text x="90" y="22" text-anchor="middle" class="card-title">Quiz Generator Agent</text>
+      <text x="90" y="36" text-anchor="middle" class="badge" fill="#6ee7b7">Formative &amp; Practice MCQs</text>
+      <line x1="15" y1="46" x2="165" y2="46" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="64" class="card-subtitle">• 4-choice grounded MCQs</text>
+      <text x="14" y="80" class="card-subtitle">• Client answer masking</text>
+      <text x="14" y="96" class="card-subtitle">• Private key preservation</text>
+      <text x="14" y="112" class="badge" fill="#34d399">Tool: generate_quiz</text>
+    </g>
+  </g>
+
+  <!-- Flow Arrows: Agents -> Foundation Layer -->
+  <line x1="357" y1="527" x2="357" y2="550" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="577" y1="527" x2="577" y2="550" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="785" y1="527" x2="785" y2="550" stroke="#34d399" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 5. Foundation Layer: Gemini API & Grounded Catalogs -->
+  <g transform="translate(50, 552)" filter="url(#cardShadow)">
+    <rect width="900" height="88" rx="12" fill="#0f172a" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="24" y="22" class="section-title" fill="#60a5fa">Foundation: Gemini LLM &amp; Verified Knowledge Taxonomy</text>
+
+    <!-- Gemini 3.8 Flash -->
+    <g transform="translate(24, 30)">
+      <rect width="270" height="46" rx="6" fill="url(#geminiGrad)" stroke="#3b82f6" stroke-width="1"/>
+      <text x="135" y="20" text-anchor="middle" class="card-title" font-size="13px">Google Gemini 3.8 Flash</text>
+      <text x="135" y="34" text-anchor="middle" class="badge" fill="#93c5fd">Google GenAI SDK • Structured JSON Outputs</text>
+    </g>
+
+    <!-- Certification Curriculum Taxonomy -->
+    <g transform="translate(310, 30)">
+      <rect width="280" height="46" rx="6" fill="url(#curricGrad)" stroke="#10b981" stroke-width="1"/>
+      <text x="140" y="20" text-anchor="middle" class="card-title" font-size="13px">Certification Curriculum</text>
+      <text x="140" y="34" text-anchor="middle" class="badge" fill="#6ee7b7">google_cloud_genai_leader.yaml • 5 Topic Domains</text>
+    </g>
+
+    <!-- Resource Catalog & Brand Icons -->
+    <g transform="translate(606, 30)">
+      <rect width="270" height="46" rx="6" fill="url(#resourceGrad)" stroke="#14b8a6" stroke-width="1"/>
+      <text x="135" y="20" text-anchor="middle" class="card-title" font-size="13px">Verified Learning Catalog</text>
+      <text x="135" y="34" text-anchor="middle" class="badge" fill="#5eead4">learning_resources.yaml • 19 Brand SVG Logomarks</text>
+    </g>
+  </g>
+
+  <!-- 6. Adaptive Remediation Feedback Loop (Left Outer Curved Path) -->
+  <path d="M 100 299 L 63 299 C 55 299 55 291 55 283 L 55 214 C 55 206 55 198 63 198 L 178 198" fill="none" stroke="#f43f5e" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arrow-rose)"/>
+  
+  <rect x="15" y="233" width="80" height="32" rx="5" fill="#881337" stroke="#f43f5e" stroke-width="1"/>
+  <text x="55" y="246" text-anchor="middle" class="badge" fill="#fecdd3" font-size="9px">Adaptive Loop</text>
+  <text x="55" y="257" text-anchor="middle" class="badge" fill="#fecdd3" font-size="8px">Score &lt; 70%</text>
+
+  <!-- 7. Integrated Observability Cluster (Bottom Right Callout) -->
+  <g transform="translate(50, 652)">
+    <rect width="500" height="42" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="1"/>
+    <text x="14" y="18" class="card-title" font-size="11.5px">🔭 OpenTelemetry &amp; Observability Stack</text>
+    <text x="14" y="32" class="badge" fill="#a1a1aa">OTel Redaction • Prometheus :8000/:9090 • Tempo :3200 • Grafana :3000</text>
+  </g>
+
+  <!-- 8. Multi-Agent Evaluation Framework (Bottom Left Callout) -->
+  <g transform="translate(565, 652)">
+    <rect width="385" height="42" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="1"/>
+    <text x="14" y="18" class="card-title" font-size="11.5px">🧪 EvaluationRunner &amp; Quality Audit</text>
+    <text x="14" y="32" class="badge" fill="#a1a1aa">Deterministic Scenarios • Plan / Expert / Quiz Benchmarking</text>
+  </g>
+
+</svg>

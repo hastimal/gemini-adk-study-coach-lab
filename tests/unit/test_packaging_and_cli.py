@@ -50,7 +50,8 @@ def test_package_metadata() -> None:
 
     content = pyproject_path.read_text(encoding="utf-8")
     assert 'name = "gemini-adk-study-coach-lab"' in content
-    assert 'version = "1.1.0"' in content
+    assert 'version = "1.1.1"' in content
+    assert 'readme = "README-pypi.md"' in content
     assert 'requires-python = ">=3.12"' in content
     assert "streamlit" in content
     assert "google-adk" in content
@@ -179,7 +180,7 @@ def test_cli_version(capsys: pytest.CaptureFixture[str]) -> None:
     assert ret == 0
     captured = capsys.readouterr()
     assert "gemini-adk-study-coach-lab" in captured.out
-    assert "1.1.0" in captured.out
+    assert "1.1.1" in captured.out
 
 
 def test_cli_doctor(capsys: pytest.CaptureFixture[str]) -> None:

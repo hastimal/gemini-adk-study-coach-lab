@@ -42,39 +42,9 @@ The **Gemini ADK Multi-Agent Study Coach** guides students preparing for technic
 
 The Study Coach architecture couples Google ADK agent delegation with deterministic Python validation:
 
-```mermaid
-graph TD
-    Student([Student Learner]) --> UI["Streamlit Workshop UI (Port 8501)"]
-    UI --> Facade["WorkshopFacade"]
-    Facade --> Workflow["AdaptiveStudyWorkflow"]
-    
-    subgraph MultiAgentEngine ["Google ADK Multi-Agent Core"]
-        Workflow --> Coordinator["Study Coach Coordinator Agent"]
-        Coordinator --> Planner["Study Planner Agent"]
-        Coordinator --> Expert["Topic Expert Agent"]
-        Coordinator --> Quizzer["Quiz Generator Agent"]
-        
-        Planner --> PlanTools["validate_study_plan & Curriculum Tools"]
-        Expert --> ExpertTools["get_topic_by_id, search_topics, get_related_topics"]
-        Quizzer --> QuizTools["generate_quiz & validate_quiz_structure"]
-    end
-    
-    subgraph DeterministicEngine ["Deterministic Python Validation"]
-        Workflow --> Grading["grade_quiz (Deterministic Python Scoring)"]
-        Workflow --> SessionSvc["LearningSessionService (ADK In-Memory)"]
-        Facade --> ResTools["Resource Catalog & Lesson Visuals Tools"]
-    end
-    
-    subgraph TelemetryCluster ["Observability Cluster"]
-        MultiAgentEngine -.-> OTel["ADKObservabilityPlugin"]
-        Workflow -.-> OTel
-        OTel --> Collector["OTel Collector (4317/4318)"]
-        Collector --> Tempo["Grafana Tempo (Traces :3200)"]
-        Collector --> Prom["Prometheus (Metrics :9090)"]
-        Tempo --> Grafana["Grafana Dashboards (:3000)"]
-        Prom --> Grafana
-    end
-```
+![Gemini ADK Study Coach Architecture](docs/images/architecture-diagram.png)
+
+*Figure 1: Production Multi-Agent Architecture of the Gemini + Google ADK Study Coach. Vector source available in [`docs/images/architecture-diagram.svg`](docs/images/architecture-diagram.svg).*
 
 For full architectural specifications and sequence flows, see [Architecture Documentation](docs/architecture.md).
 
@@ -206,7 +176,7 @@ For evaluation methodology, see [Evaluation Guide](docs/evaluation.md).
 
 Run Gemini ADK Study Coach directly without cloning the repository!
 
-📦 **Official PyPI Package**: [https://pypi.org/project/gemini-adk-study-coach-lab/](https://pypi.org/project/gemini-adk-study-coach-lab/) (Version: `1.1.0`)
+📦 **Official PyPI Package**: [https://pypi.org/project/gemini-adk-study-coach-lab/](https://pypi.org/project/gemini-adk-study-coach-lab/)
 
 ### Zero-Clone Execution via `uvx` (Recommended)
 Run the application instantly without cloning or local installation:
@@ -232,7 +202,7 @@ To build and run from local source distribution:
 uv build
 
 # Install and run the wheel in an isolated tool environment
-uv tool install dist/gemini_adk_study_coach_lab-1.1.0-py3-none-any.whl
+uv tool install dist/gemini_adk_study_coach_lab-*.whl
 
 # Run the CLI
 gemini-adk-study-coach-lab --help

@@ -33,7 +33,7 @@ To validate the packaged distribution prior to PyPI publication:
 uv build
 
 # 2. Install into isolated tool environment
-uv tool install dist/gemini_adk_study_coach_lab-1.1.0-py3-none-any.whl
+uv tool install dist/gemini_adk_study_coach_lab-*.whl
 
 # 3. Execute
 gemini-adk-study-coach-lab --help
@@ -94,7 +94,7 @@ gemini-adk-study-coach-lab doctor
 Displays installed package version:
 ```bash
 gemini-adk-study-coach-lab version
-# Output: gemini-adk-study-coach-lab 1.1.0
+# Output: gemini-adk-study-coach-lab 1.1.1
 ```
 
 ### `--help`

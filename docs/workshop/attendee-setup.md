@@ -61,7 +61,7 @@ uvx gemini-adk-study-coach-lab
 
 For pre-publication local wheel testing:
 ```bash
-uv tool install dist/gemini_adk_study_coach_lab-1.1.0-py3-none-any.whl
+uv tool install dist/gemini_adk_study_coach_lab-*.whl
 gemini-adk-study-coach-lab doctor
 gemini-adk-study-coach-lab start
 ```
