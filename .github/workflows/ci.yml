@@ -42,18 +42,74 @@ jobs:
     - name: Verify Clean Wheel Installation in Isolated Virtualenv
       run: |
         python3 -m venv /tmp/clean-wheel-venv
-        /tmp/clean-wheel-venv/bin/pip install --upgrade pip
-        /tmp/clean-wheel-venv/bin/pip install dist/gemini_adk_study_coach-*.whl
-        cd /tmp
-        /tmp/clean-wheel-venv/bin/gemini-adk-study-coach --help
-        /tmp/clean-wheel-venv/bin/gemini-adk-study-coach version
-        /tmp/clean-wheel-venv/bin/gemini-adk-study-coach doctor
+        /tmp/clean-wheel-venv/bin/python -m pip install --upgrade pip
+
+        # Ensure exactly one wheel exists matching the expected distribution name
+        WHEEL_COUNT=$(ls -1 dist/gemini_adk_study_coach_lab-*.whl 2>/dev/null | wc -l)
+        if [ "$WHEEL_COUNT" -ne 1 ]; then
+          echo "Error: Expected exactly 1 wheel matching gemini_adk_study_coach_lab-*.whl, found $WHEEL_COUNT"
+          ls -la dist/
+          exit 1
+        fi
+
+        /tmp/clean-wheel-venv/bin/python -m pip install dist/*.whl
+
+        (
+          cd /tmp
+          # Primary CLI validation
+          /tmp/clean-wheel-venv/bin/gemini-adk-study-coach-lab --help
+          /tmp/clean-wheel-venv/bin/gemini-adk-study-coach-lab doctor
+          VERSION_OUTPUT=$(/tmp/clean-wheel-venv/bin/gemini-adk-study-coach-lab version)
+          echo "$VERSION_OUTPUT"
+          echo "$VERSION_OUTPUT" | grep -F "1.1.0"
+
+          # Backward-compatible alias validation
+          /tmp/clean-wheel-venv/bin/gemini-adk-study-coach --help
+          /tmp/clean-wheel-venv/bin/gemini-adk-study-coach version | grep -F "1.1.0"
+
+          # Verify built-in curriculum resources load
+          /tmp/clean-wheel-venv/bin/python -c '
+          from study_coach.tools.curriculum_tools import load_curriculum
+          data = load_curriculum()
+          topics = data.get("topics", [])
+          assert len(topics) >= 4, f"Curriculum failed to load: {data}"
+          print(f"Successfully loaded {len(topics)} curriculum topics from installed wheel.")
+          '
+        )
 
     - name: Verify Clean Sdist Installation in Isolated Virtualenv
       run: |
         python3 -m venv /tmp/clean-sdist-venv
-        /tmp/clean-sdist-venv/bin/pip install --upgrade pip
-        /tmp/clean-sdist-venv/bin/pip install dist/gemini_adk_study_coach-*.tar.gz
-        cd /tmp
-        /tmp/clean-sdist-venv/bin/gemini-adk-study-coach version
-        /tmp/clean-sdist-venv/bin/gemini-adk-study-coach doctor
+        /tmp/clean-sdist-venv/bin/python -m pip install --upgrade pip
+
+        # Ensure exactly one sdist exists matching the expected distribution name
+        SDIST_COUNT=$(ls -1 dist/gemini_adk_study_coach_lab-*.tar.gz 2>/dev/null | wc -l)
+        if [ "$SDIST_COUNT" -ne 1 ]; then
+          echo "Error: Expected exactly 1 sdist matching gemini_adk_study_coach_lab-*.tar.gz, found $SDIST_COUNT"
+          ls -la dist/
+          exit 1
+        fi
+
+        /tmp/clean-sdist-venv/bin/python -m pip install dist/*.tar.gz
+
+        (
+          cd /tmp
+          # Primary CLI validation
+          /tmp/clean-sdist-venv/bin/gemini-adk-study-coach-lab --help
+          /tmp/clean-sdist-venv/bin/gemini-adk-study-coach-lab doctor
+          VERSION_OUTPUT=$(/tmp/clean-sdist-venv/bin/gemini-adk-study-coach-lab version)
+          echo "$VERSION_OUTPUT"
+          echo "$VERSION_OUTPUT" | grep -F "1.1.0"
+
+          # Backward-compatible alias validation
+          /tmp/clean-sdist-venv/bin/gemini-adk-study-coach version | grep -F "1.1.0"
+
+          # Verify built-in curriculum resources load
+          /tmp/clean-sdist-venv/bin/python -c '
+          from study_coach.tools.curriculum_tools import load_curriculum
+          data = load_curriculum()
+          topics = data.get("topics", [])
+          assert len(topics) >= 4, f"Curriculum failed to load: {data}"
+          print(f"Successfully loaded {len(topics)} curriculum topics from installed sdist.")
+          '
+        )

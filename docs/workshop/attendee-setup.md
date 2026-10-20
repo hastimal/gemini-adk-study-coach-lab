@@ -56,14 +56,14 @@ This guide gets you completely set up to participate in the **Gemini + Google AD
 export GEMINI_API_KEY="your-gemini-api-key"
 
 # Run immediately without cloning repository
-uvx gemini-adk-study-coach
+uvx gemini-adk-study-coach-lab
 ```
 
 For pre-publication local wheel testing:
 ```bash
-uv tool install dist/gemini_adk_study_coach-1.1.0-py3-none-any.whl
-gemini-adk-study-coach doctor
-gemini-adk-study-coach start
+uv tool install dist/gemini_adk_study_coach_lab-1.1.0-py3-none-any.whl
+gemini-adk-study-coach-lab doctor
+gemini-adk-study-coach-lab start
 ```
 
 ### Option B: Clone and Developer Environment Setup (From Source)
