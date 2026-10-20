@@ -49,7 +49,7 @@ def test_package_metadata() -> None:
     assert pyproject_path.is_file()
 
     content = pyproject_path.read_text(encoding="utf-8")
-    assert 'name = "gemini-adk-study-coach"' in content
+    assert 'name = "gemini-adk-study-coach-lab"' in content
     assert 'version = "1.1.0"' in content
     assert 'requires-python = ">=3.12"' in content
     assert "streamlit" in content
@@ -62,14 +62,14 @@ def test_console_entrypoint_defined() -> None:
     pyproject_path = PROJECT_ROOT / "pyproject.toml"
     content = pyproject_path.read_text(encoding="utf-8")
     assert "[project.scripts]" in content
-    assert 'gemini-adk-study-coach = "study_coach.cli:main"' in content
+    assert 'gemini-adk-study-coach-lab = "study_coach.cli:main"' in content
 
 
 def test_wheel_contents(tmp_path: Path) -> None:
     """3. Verify wheel artifact contains all required packages and assets."""
     dist_dir = PROJECT_ROOT / "dist"
-    wheels = list(dist_dir.glob("gemini_adk_study_coach-*.whl")) + list(
-        dist_dir.glob("study_coach-*.whl")
+    wheels = list(dist_dir.glob("gemini_adk_study_coach_lab-*.whl")) + list(
+        dist_dir.glob("gemini_adk_study_coach-*.whl")
     )
     if not wheels:
         pytest.skip("No wheel built in dist/ yet. Run 'uv build' to produce wheel.")
@@ -106,8 +106,8 @@ def test_wheel_contents(tmp_path: Path) -> None:
 def test_sdist_contents() -> None:
     """4. Verify sdist artifact contains sources, license, and metadata."""
     dist_dir = PROJECT_ROOT / "dist"
-    sdists = list(dist_dir.glob("gemini_adk_study_coach-*.tar.gz")) + list(
-        dist_dir.glob("study_coach-*.tar.gz")
+    sdists = list(dist_dir.glob("gemini_adk_study_coach_lab-*.tar.gz")) + list(
+        dist_dir.glob("gemini_adk_study_coach-*.tar.gz")
     )
     if not sdists:
         pytest.skip("No sdist built in dist/ yet. Run 'uv build' to produce sdist.")
@@ -167,7 +167,7 @@ def test_cli_help(capsys: pytest.CaptureFixture[str]) -> None:
         main(["--help"])
     assert excinfo.value.code == 0
     captured = capsys.readouterr()
-    assert "gemini-adk-study-coach" in captured.out
+    assert "gemini-adk-study-coach-lab" in captured.out
     assert "start" in captured.out
     assert "doctor" in captured.out
     assert "version" in captured.out
@@ -178,7 +178,7 @@ def test_cli_version(capsys: pytest.CaptureFixture[str]) -> None:
     ret = main(["version"])
     assert ret == 0
     captured = capsys.readouterr()
-    assert "gemini-adk-study-coach" in captured.out
+    assert "gemini-adk-study-coach-lab" in captured.out
     assert "1.1.0" in captured.out
 
 

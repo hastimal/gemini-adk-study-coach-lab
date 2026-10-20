@@ -201,7 +201,7 @@ For evaluation methodology, see [Evaluation Guide](docs/evaluation.md).
 
 ---
 
-## 11. Quick Start with `gemini-adk-study-coach` CLI
+## 11. Quick Start with `gemini-adk-study-coach-lab` CLI
 
 Run Gemini ADK Study Coach directly without cloning the repository!
 
@@ -214,11 +214,11 @@ Once published to PyPI:
 export GEMINI_API_KEY="your-api-key"
 
 # Instant zero-clone execution via uvx (recommended)
-uvx gemini-adk-study-coach
+uvx gemini-adk-study-coach-lab
 
 # Or install globally via pipx
-pipx install gemini-adk-study-coach
-gemini-adk-study-coach
+pipx install gemini-adk-study-coach-lab
+gemini-adk-study-coach-lab
 ```
 
 ### Pre-Publication Validation (Local Wheel)
@@ -228,23 +228,25 @@ To test the packaged application locally before PyPI publication:
 uv build
 
 # Install and run the wheel in an isolated tool environment
-uv tool install dist/gemini_adk_study_coach-1.1.0-py3-none-any.whl
+uv tool install dist/gemini_adk_study_coach_lab-1.1.0-py3-none-any.whl
 
 # Run the CLI
-gemini-adk-study-coach --help
-gemini-adk-study-coach doctor
-gemini-adk-study-coach start
+gemini-adk-study-coach-lab --help
+gemini-adk-study-coach-lab doctor
+gemini-adk-study-coach-lab start
 ```
 
 ### CLI Commands Reference
 
 | Command | Description | Example |
 | :--- | :--- | :--- |
-| `gemini-adk-study-coach` | Default command: starts Streamlit Study Coach UI on port 8501 | `gemini-adk-study-coach` |
-| `gemini-adk-study-coach start` | Starts Streamlit UI with options for custom port, address, and headless mode | `gemini-adk-study-coach start --port 8502 --headless` |
-| `gemini-adk-study-coach doctor` | Runs environment diagnostics (Python, dependencies, API keys, ports, Docker) | `gemini-adk-study-coach doctor` |
-| `gemini-adk-study-coach version` | Displays installed package version | `gemini-adk-study-coach version` |
-| `gemini-adk-study-coach --help` | Shows full CLI help and command options | `gemini-adk-study-coach --help` |
+| `gemini-adk-study-coach-lab` | Default command: starts Streamlit Study Coach UI on port 8501 | `gemini-adk-study-coach-lab` |
+| `gemini-adk-study-coach-lab start` | Starts Streamlit UI with options for custom port, address, and headless mode | `gemini-adk-study-coach-lab start --port 8502 --headless` |
+| `gemini-adk-study-coach-lab doctor` | Runs environment diagnostics (Python, dependencies, API keys, ports, Docker) | `gemini-adk-study-coach-lab doctor` |
+| `gemini-adk-study-coach-lab version` | Displays installed package version | `gemini-adk-study-coach-lab version` |
+| `gemini-adk-study-coach-lab --help` | Shows full CLI help and command options | `gemini-adk-study-coach-lab --help` |
+
+*(Note: `gemini-adk-study-coach` is also available as a console script alias for backward compatibility).*
 
 #### Available Flags for `start`:
 - `-p, --port <PORT>`: Local port to bind Streamlit server (default: `8501`).
@@ -259,12 +261,12 @@ gemini-adk-study-coach start
 #### Upgrading & Uninstalling:
 ```bash
 # Upgrade when using pipx
-pipx upgrade gemini-adk-study-coach
+pipx upgrade gemini-adk-study-coach-lab
 
 # Uninstall
-pipx uninstall gemini-adk-study-coach
+pipx uninstall gemini-adk-study-coach-lab
 # or via uv tool
-uv tool uninstall gemini-adk-study-coach
+uv tool uninstall gemini-adk-study-coach-lab
 ```
 
 ---

@@ -22,12 +22,15 @@ from study_coach import __version__
 def get_version() -> str:
     """Returns the installed package version or fallback."""
     try:
-        return importlib.metadata.version("gemini-adk-study-coach")
+        return importlib.metadata.version("gemini-adk-study-coach-lab")
     except importlib.metadata.PackageNotFoundError:
         try:
-            return importlib.metadata.version("study-coach")
+            return importlib.metadata.version("gemini-adk-study-coach")
         except importlib.metadata.PackageNotFoundError:
-            return __version__
+            try:
+                return importlib.metadata.version("study-coach")
+            except importlib.metadata.PackageNotFoundError:
+                return __version__
 
 
 def get_ui_app_path() -> Path:
@@ -62,7 +65,7 @@ def get_ui_app_path() -> Path:
 
     raise FileNotFoundError(
         "Could not locate bundled Streamlit entrypoint 'ui/app.py'. "
-        "Ensure the gemini-adk-study-coach package is properly installed."
+        "Ensure the gemini-adk-study-coach-lab package is properly installed."
     )
 
 
@@ -89,7 +92,7 @@ def mask_key(key: str) -> str:
 def cmd_version(args: argparse.Namespace) -> int:
     """Prints the installed package version."""
     version = get_version()
-    print(f"gemini-adk-study-coach {version}")
+    print(f"gemini-adk-study-coach-lab {version}")
     return 0
 
 
@@ -127,7 +130,7 @@ def cmd_doctor(args: argparse.Namespace) -> int:
             package_location = str(Path(study_coach.__file__).resolve().parent)
     except (ImportError, AttributeError, OSError):
         package_location = "Unknown"
-    print(f"  [OK] Package: gemini-adk-study-coach v{version}")
+    print(f"  [OK] Package: gemini-adk-study-coach-lab v{version}")
     print(f"       Location: {package_location}")
 
     # 3. Bundled Resource Verification
@@ -276,7 +279,7 @@ def cmd_doctor(args: argparse.Namespace) -> int:
         return 1
 
     print("✅ STATUS: Environment is ready to run Gemini ADK Study Coach.")
-    print("   Run: gemini-adk-study-coach start")
+    print("   Run: gemini-adk-study-coach-lab start")
     print(
         "================================================================================"
     )
@@ -301,8 +304,8 @@ def cmd_start(args: argparse.Namespace) -> int:
     if is_port_in_use(port, host=address):
         print(
             f"Error: Port {port} is already in use on {address} by another process.\n"
-            f"Specify a different port using: gemini-adk-study-coach start --port <PORT>\n"
-            f"Example: gemini-adk-study-coach start --port 8502",
+            f"Specify a different port using: gemini-adk-study-coach-lab start --port <PORT>\n"
+            f"Example: gemini-adk-study-coach-lab start --port 8502",
             file=sys.stderr,
         )
         return 1
@@ -369,7 +372,7 @@ def cmd_start(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     """Builds the command-line argument parser."""
     parser = argparse.ArgumentParser(
-        prog="gemini-adk-study-coach",
+        prog="gemini-adk-study-coach-lab",
         description="Gemini + Google ADK Multi-Agent Study Coach CLI.",
     )
     parser.add_argument(

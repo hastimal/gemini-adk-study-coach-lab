@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/gemini-adk-study-coach
+      url: https://test.pypi.org/p/gemini-adk-study-coach-lab
     steps:
     - name: Download distribution artifacts
       uses: actions/download-artifact@v4
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/gemini-adk-study-coach
+      url: https://pypi.org/p/gemini-adk-study-coach-lab
     steps:
     - name: Download distribution artifacts
       uses: actions/download-artifact@v4

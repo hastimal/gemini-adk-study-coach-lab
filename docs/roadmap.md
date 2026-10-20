@@ -11,7 +11,7 @@
 
 The Study Coach v1.0.0 release provides a complete, working multi-agent adaptive study coach anchored to the Google Cloud Generative AI Leader certification syllabus. The future roadmap expands the platform across subsequent feature iterations:
 
-1. **PyPI Package & uvx CLI Distribution (Target: v1.1.0 / Issue #3)**: Making the Study Coach installable as a Python package (`gemini-adk-study-coach`) with zero-clone startup (`uvx gemini-adk-study-coach`), environment diagnostics (`doctor`), and bundled assets.
+1. **PyPI Package & uvx CLI Distribution (Target: v1.1.0 / Issue #3)**: Making the Study Coach installable as a Python package (`gemini-adk-study-coach-lab`) with zero-clone startup (`uvx gemini-adk-study-coach-lab`), environment diagnostics (`doctor`), and bundled assets.
 2. **Multi-Certification Management (Issue #1)**: Enabling custom tracks and self-directed curriculum creation across multiple cloud and software engineering certifications.
 3. **Document RAG + Agent Chatbot + Guide-Grounded MCQs (Issue #2)**: Enabling students to upload proprietary PDF/DOCX study guides, ask grounded questions with source citations, and generate targeted practice questions from their personal documents.
 4. **Persistent Student Progress (Issue #4)**: Local SQLite session persistence, resume functionality, and cross-session progress history.

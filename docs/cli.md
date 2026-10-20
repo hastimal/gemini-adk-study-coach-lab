@@ -1,6 +1,6 @@
 # Gemini ADK Study Coach — CLI Reference Guide
 
-The `gemini-adk-study-coach` command-line interface provides zero-clone execution, local application management, and environment diagnostics for the Gemini ADK Study Coach.
+The `gemini-adk-study-coach-lab` command-line interface provides zero-clone execution, local application management, and environment diagnostics for the Gemini ADK Study Coach.
 
 ---
 
@@ -16,13 +16,13 @@ With `uvx` (recommended):
 export GEMINI_API_KEY="your-gemini-api-key"
 
 # Launch directly without cloning
-uvx gemini-adk-study-coach
+uvx gemini-adk-study-coach-lab
 ```
 
 With `pipx`:
 ```bash
-pipx install gemini-adk-study-coach
-gemini-adk-study-coach
+pipx install gemini-adk-study-coach-lab
+gemini-adk-study-coach-lab
 ```
 
 ### Pre-Publication Local Wheel Installation
@@ -33,12 +33,12 @@ To validate the packaged distribution prior to PyPI publication:
 uv build
 
 # 2. Install into isolated tool environment
-uv tool install dist/gemini_adk_study_coach-1.1.0-py3-none-any.whl
+uv tool install dist/gemini_adk_study_coach_lab-1.1.0-py3-none-any.whl
 
 # 3. Execute
-gemini-adk-study-coach --help
-gemini-adk-study-coach doctor
-gemini-adk-study-coach start
+gemini-adk-study-coach-lab --help
+gemini-adk-study-coach-lab doctor
+gemini-adk-study-coach-lab start
 ```
 
 ---
@@ -48,13 +48,15 @@ gemini-adk-study-coach start
 ### Default Command
 Running without arguments starts the bundled Streamlit Study Coach web application on default port 8501:
 ```bash
-gemini-adk-study-coach
+gemini-adk-study-coach-lab
 ```
+
+*(Note: The legacy command alias `gemini-adk-study-coach` is also supported for backward compatibility).*
 
 ### `start`
 Explicitly launches the Streamlit Study Coach web application:
 ```bash
-gemini-adk-study-coach start [OPTIONS]
+gemini-adk-study-coach-lab start [OPTIONS]
 ```
 
 **Options**:
@@ -65,13 +67,13 @@ gemini-adk-study-coach start [OPTIONS]
 **Examples**:
 ```bash
 # Run on default port (8501)
-gemini-adk-study-coach start
+gemini-adk-study-coach-lab start
 
 # Run on a custom port
-gemini-adk-study-coach start --port 8502
+gemini-adk-study-coach-lab start --port 8502
 
 # Run headless in container or remote server
-gemini-adk-study-coach start --port 8501 --headless --address 0.0.0.0
+gemini-adk-study-coach-lab start --port 8501 --headless --address 0.0.0.0
 ```
 
 ### `doctor`
@@ -85,21 +87,21 @@ Performs comprehensive diagnostic checks on your environment, verifying:
 - Optional Docker availability (for telemetry stack)
 
 ```bash
-gemini-adk-study-coach doctor
+gemini-adk-study-coach-lab doctor
 ```
 
 ### `version`
 Displays installed package version:
 ```bash
-gemini-adk-study-coach version
-# Output: gemini-adk-study-coach 1.1.0
+gemini-adk-study-coach-lab version
+# Output: gemini-adk-study-coach-lab 1.1.0
 ```
 
 ### `--help`
 Displays command-line help and usage:
 ```bash
-gemini-adk-study-coach --help
-gemini-adk-study-coach start --help
+gemini-adk-study-coach-lab --help
+gemini-adk-study-coach-lab start --help
 ```
 
 ---
@@ -125,7 +127,7 @@ The CLI supports credential configuration through environment variables or local
 If port 8501 is occupied, the CLI detects the conflict and advises:
 ```text
 Error: Port 8501 is already in use by another process.
-Specify a different port using: gemini-adk-study-coach start --port <PORT>
+Specify a different port using: gemini-adk-study-coach-lab start --port <PORT>
 ```
 
 ### Missing API Key Warning

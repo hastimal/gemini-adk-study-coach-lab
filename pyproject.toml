@@ -1,5 +1,5 @@
 [project]
-name = "gemini-adk-study-coach"
+name = "gemini-adk-study-coach-lab"
 version = "1.1.0"
 description = "AI Study Coach helping students prepare for technical certifications"
 readme = "README.md"
@@ -41,6 +41,7 @@ dependencies = [
 ]
 
 [project.scripts]
+gemini-adk-study-coach-lab = "study_coach.cli:main"
 gemini-adk-study-coach = "study_coach.cli:main"
 
 [project.optional-dependencies]

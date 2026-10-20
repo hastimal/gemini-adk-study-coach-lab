@@ -832,4 +832,130 @@ Successfully built dist/gemini_adk_study_coach-1.1.0-py3-none-any.whl
 Test suite: 173 passed (100% pass rate).
 All quality gates verified cleanly.
 
+---
+
+## Package & CLI Rename to `gemini-adk-study-coach-lab`
+
+### Original Prompt Instruction
+```text
+# ANTIGRAVITY — RENAME PYPI PACKAGE BEFORE PUBLICATION
+
+PROJECT: gemini-adk-study-coach-lab
+BRANCH: main
+TARGET VERSION: 1.1.0
+
+GOAL:
+Rename the PyPI distribution and CLI to
+gemini-adk-study-coach-lab so they match
+the existing GitHub repository name.
+
+IMPORTANT:
+The previous production PyPI upload failed.
+Do not assume version 1.1.0 is unpublished;
+verify it before proceeding.
+
+1. Read GEMINI.md and packaging documentation.
+
+2. Inspect pyproject.toml, CLI implementation,
+   GitHub Actions publishing workflow,
+   tests, README and docs/cli.md.
+
+3. Change the Python distribution name:
+
+   FROM: gemini-adk-study-coach
+   TO:   gemini-adk-study-coach-lab
+
+4. Change the default CLI console command:
+
+   FROM: gemini-adk-study-coach
+   TO:   gemini-adk-study-coach-lab
+
+5. Keep the internal Python import package:
+   study_coach
+
+6. Keep Google ADK agents, Streamlit UI,
+   curriculum, Docker, Grafana and
+   evaluation functionality unchanged.
+
+7. Update packaging tests, CLI tests,
+   installation instructions and release docs.
+
+8. Preserve compatibility with existing
+   repository-based startup scripts.
+
+9. Run:
+   uv sync --all-extras --dev
+   uv run ruff check .
+   uv run ruff format --check .
+   uv run mypy .
+   uv run pytest -q
+   uv build
+
+10. Verify the new artifacts are named:
+
+    gemini_adk_study_coach_lab-1.1.0-py3-none-any.whl
+    gemini_adk_study_coach_lab-1.1.0.tar.gz
+
+11. Install the wheel in a clean environment
+    outside the Git repository.
+
+12. Verify:
+    gemini-adk-study-coach-lab --help
+    gemini-adk-study-coach-lab doctor
+    gemini-adk-study-coach-lab version
+
+13. Verify the packaged Streamlit UI starts
+    and built-in curriculum resources load.
+
+14. Verify the PyPI pending publisher matches:
+
+    Project: gemini-adk-study-coach-lab
+    Owner: hastimal
+    Repository: gemini-adk-study-coach-lab
+    Workflow: publish-pypi.yml
+    Environment: pypi
+
+15. Commit and push the rename to main.
+
+16. Report new commit and final test results.
+
+STOP BEFORE TRIGGERING PYPI PUBLISHING.
+
+Do not publish to PyPI yet.
+Do not create v1.1.0 tag yet.
+Do not modify v1.0.0.
+Do not force-push.
+```
+
+### Implementation & Verification Summary
+
+1. **PyPI Status Check**:
+   - Confirmed `gemini-adk-study-coach` and `gemini-adk-study-coach-lab` are currently unpublished (HTTP 404 on both PyPI and TestPyPI).
+2. **Distribution & Entrypoint Rename**:
+   - Updated `pyproject.toml` distribution name: `gemini-adk-study-coach-lab`.
+   - Updated `[project.scripts]` to register `gemini-adk-study-coach-lab = "study_coach.cli:main"` as default CLI, preserving `gemini-adk-study-coach = "study_coach.cli:main"` as backward-compatible alias.
+   - Maintained internal import package `study_coach`.
+3. **CLI Updates (`src/study_coach/cli.py`)**:
+   - `get_version()` checks `gemini-adk-study-coach-lab` first, with graceful fallback to `gemini-adk-study-coach`, `study-coach`, or `__version__`.
+   - `cmd_version()` outputs `gemini-adk-study-coach-lab <version>`.
+   - `build_parser()` uses `prog="gemini-adk-study-coach-lab"`.
+   - `cmd_doctor()` and `cmd_start()` references updated to `gemini-adk-study-coach-lab`.
+4. **Documentation & Workflows**:
+   - Updated `.github/workflows/publish-pypi.yml` environment URLs.
+   - Updated `README.md` and `docs/cli.md` commands, options, and installation instructions.
+   - Updated `docs/roadmap.md` references.
+5. **Quality Gates Passed**:
+   - `uv run ruff check .` -> All checks passed!
+   - `uv run ruff format --check .` -> 118 files already formatted.
+   - `uv run mypy .` -> Success: no issues found in 83 source files.
+   - `uv run pytest -q` -> 173 passed.
+   - `uv build` -> Successfully built:
+     - `dist/gemini_adk_study_coach_lab-1.1.0-py3-none-any.whl`
+     - `dist/gemini_adk_study_coach_lab-1.1.0.tar.gz`
+6. **External Isolated Wheel Verification**:
+   - Installed wheel into `/tmp/verify_gemini_rename_env`.
+   - Verified `--help`, `version`, `doctor`, and alias from `/tmp`.
+   - Verified Streamlit UI start on port 8504 returning `_stcore/health` `ok`.
+   - Verified built-in curriculum loading (4 core topics loaded).
+
 
