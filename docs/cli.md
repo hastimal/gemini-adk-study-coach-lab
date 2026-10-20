@@ -6,9 +6,9 @@ The `gemini-adk-study-coach-lab` command-line interface provides zero-clone exec
 
 ## 1. Installation & Zero-Clone Execution
 
-### Remote Zero-Clone Invocation (Planned Post-PyPI Publication)
+### Remote Zero-Clone Invocation (PyPI)
 
-> **Notice**: The commands below are planned for availability following official publication to PyPI.
+📦 **PyPI Package**: [https://pypi.org/project/gemini-adk-study-coach-lab/](https://pypi.org/project/gemini-adk-study-coach-lab/)
 
 With `uvx` (recommended):
 ```bash

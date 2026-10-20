@@ -958,4 +958,122 @@ Do not force-push.
    - Verified Streamlit UI start on port 8504 returning `_stcore/health` `ok`.
    - Verified built-in curriculum loading (4 core topics loaded).
 
+---
+
+## Production PyPI Publication & Release v1.1.0
+
+### Original Prompt Instruction
+```text
+# ANTIGRAVITY — FINAL PRODUCTION PYPI PUBLICATION
+
+PROJECT: gemini-adk-study-coach-lab
+PACKAGE: gemini-adk-study-coach-lab
+VERSION: 1.1.0
+
+CURRENT MAIN COMMIT: bcf5620
+
+GOAL:
+Publish version 1.1.0 to production PyPI,
+verify installation, and create a GitHub Release.
+
+Read GEMINI.md first.
+
+1. Confirm main is clean and synchronized.
+
+2. Confirm successful CI:
+   https://github.com/hastimal/gemini-adk-study-coach-lab/actions/runs/39394699305
+
+3. Verify production PyPI Trusted Publisher:
+
+   Project: gemini-adk-study-coach-lab
+   Owner: hastimal
+   Repository: gemini-adk-study-coach-lab
+   Workflow: publish-pypi.yml
+   Environment: pypi
+
+4. Verify version 1.1.0 has not already
+   been published.
+
+5. Confirm publishing workflow uses:
+   environment: pypi
+   id-token: write
+   production PyPI endpoint
+
+6. Trigger:
+   gh workflow run publish-pypi.yml -f target=pypi
+
+7. Wait for the workflow to complete.
+
+8. If any publish step fails:
+   - Inspect logs.
+   - Report the root cause.
+   - Stop before release tagging.
+   - Do not blindly retry uploads.
+
+9. Verify the actual PyPI page:
+   https://pypi.org/project/gemini-adk-study-coach-lab/1.1.0/
+
+10. Test in a clean environment:
+
+    uvx gemini-adk-study-coach-lab --help
+    uvx gemini-adk-study-coach-lab doctor
+
+11. Verify Streamlit launches from the
+    published package.
+
+12. Create annotated Git tag v1.1.0
+    on the exact commit used to build
+    the published distribution.
+
+13. Push the tag and create a GitHub Release
+    for v1.1.0.
+
+14. Update README installation instructions
+    with the confirmed PyPI URL.
+
+15. Report:
+    - Publishing workflow URL
+    - PyPI project/version URL
+    - CLI installation results
+    - GitHub Release URL
+    - Release commit and tag
+    - Any remaining limitations
+
+IMPORTANT:
+- Skip TestPyPI.
+- Do not rename the package again.
+- Preserve v1.0.0.
+- Do not force-push.
+- Do not expose API keys.
+- Do not claim success until verified.
+```
+
+### Publication & Verification Record
+
+1. **Pre-Publishing Invariants**:
+   - `main` branch confirmed clean and synchronized at commit `bcf56200e098c9e1ab6aab5901829c36e1cd1fde`.
+   - CI Run [#39394699305](https://github.com/hastimal/gemini-adk-study-coach-lab/actions/runs/39394699305) completed with status `success`.
+   - Production PyPI Pending Trusted Publisher verified (`hastimal/gemini-adk-study-coach-lab`, `publish-pypi.yml`, environment `pypi`).
+   - Confirmed version 1.1.0 was unpublished before trigger (HTTP 404 on PyPI JSON API).
+2. **GitHub Actions PyPI Publishing Workflow**:
+   - Triggered: `gh workflow run publish-pypi.yml -f target=pypi`
+   - Workflow Run: [#39395313632](https://github.com/hastimal/gemini-adk-study-coach-lab/actions/runs/39395313632)
+   - Status: `completed` (conclusion: `success`)
+   - OIDC Authentication: Validated claims against PyPI Trusted Publisher and minted upload token.
+   - Files uploaded:
+     - `gemini_adk_study_coach_lab-1.1.0-py3-none-any.whl` (100,025 bytes, HTTP 200 OK)
+     - `gemini_adk_study_coach_lab-1.1.0.tar.gz` (74,783 bytes, HTTP 200 OK)
+3. **Live PyPI Verification**:
+   - Live URL: [https://pypi.org/project/gemini-adk-study-coach-lab/1.1.0/](https://pypi.org/project/gemini-adk-study-coach-lab/1.1.0/)
+   - Queried PyPI JSON API: Verified release `1.1.0` with both distribution files present.
+4. **Clean Remote Installation & Execution**:
+   - `uvx gemini-adk-study-coach-lab --help`: Successfully pulled package and dependencies from PyPI, printed CLI usage.
+   - `uvx gemini-adk-study-coach-lab doctor`: Validated environment, bundled YAML curriculum, learning catalog, provider registry, and brand SVGs.
+   - Streamlit UI Launch: Started on port 8505 via `uvx`, queried `http://127.0.0.1:8505/_stcore/health` returning `ok`.
+5. **Git Tag & GitHub Release**:
+   - Annotated Tag: `v1.1.0` created on commit `bcf56200e098c9e1ab6aab5901829c36e1cd1fde`.
+   - Pushed Tag: `v1.1.0` pushed to `origin`.
+   - GitHub Release: Created with release assets at [https://github.com/hastimal/gemini-adk-study-coach-lab/releases/tag/v1.1.0](https://github.com/hastimal/gemini-adk-study-coach-lab/releases/tag/v1.1.0).
+
+
 

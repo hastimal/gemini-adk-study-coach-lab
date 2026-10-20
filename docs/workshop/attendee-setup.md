@@ -47,9 +47,9 @@ This guide gets you completely set up to participate in the **Gemini + Google AD
 
 ## 3. Workshop Launch Options
 
-### Option A: Zero-Clone Execution via `uvx` (Planned Post-PyPI Publication)
+### Option A: Zero-Clone Execution via `uvx` (PyPI)
 
-> **Notice**: The `uvx` and `pipx` commands are planned for official PyPI availability.
+📦 **PyPI Package**: [https://pypi.org/project/gemini-adk-study-coach-lab/](https://pypi.org/project/gemini-adk-study-coach-lab/)
 
 ```bash
 # Configure API Key

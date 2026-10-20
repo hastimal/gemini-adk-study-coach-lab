@@ -1,6 +1,7 @@
 # Gemini ADK Multi-Agent Study Coach Lab
 
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
+[![PyPI](https://img.shields.io/pypi/v/gemini-adk-study-coach-lab.svg)](https://pypi.org/project/gemini-adk-study-coach-lab/)
 [![Google ADK](https://img.shields.io/badge/Google%20ADK-Agent%20Development%20Kit-orange.svg)](https://github.com/google/adk)
 [![Gemini API](https://img.shields.io/badge/Google%20Gemini-gemini--3.8--flash-brightgreen.svg)](https://ai.google.dev/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-Workshop%20UI-FF4B4B.svg)](https://streamlit.io/)
@@ -205,24 +206,27 @@ For evaluation methodology, see [Evaluation Guide](docs/evaluation.md).
 
 Run Gemini ADK Study Coach directly without cloning the repository!
 
-> **Note on PyPI Publication**: The `uvx` and `pipx` remote execution commands below are **planned and will be available once published to PyPI**. For local pre-publication validation, use the local wheel installation instructions below.
+📦 **Official PyPI Package**: [https://pypi.org/project/gemini-adk-study-coach-lab/](https://pypi.org/project/gemini-adk-study-coach-lab/) (Version: `1.1.0`)
 
-### Planned PyPI / Zero-Clone Execution
-Once published to PyPI:
+### Zero-Clone Execution via `uvx` (Recommended)
+Run the application instantly without cloning or local installation:
 ```bash
 # Set your Gemini API key
 export GEMINI_API_KEY="your-api-key"
 
-# Instant zero-clone execution via uvx (recommended)
+# Instant zero-clone execution via uvx
 uvx gemini-adk-study-coach-lab
+```
 
-# Or install globally via pipx
+### Installation via `pipx`
+For persistent global installation on your machine:
+```bash
 pipx install gemini-adk-study-coach-lab
 gemini-adk-study-coach-lab
 ```
 
 ### Pre-Publication Validation (Local Wheel)
-To test the packaged application locally before PyPI publication:
+To build and run from local source distribution:
 ```bash
 # Build the distribution packages
 uv build
