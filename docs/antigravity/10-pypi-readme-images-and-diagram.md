@@ -209,7 +209,7 @@ No force-pushing.
 
 ### 5. Quality Assurance & Packaging Validation
 - `uv run ruff check .`: Passed (0 errors).
-- `uv run ruff format --check .`: Passed (119 files formatted).
+- `uv run ruff format --check .`: Passed (120 files formatted).
 - `uv run mypy .`: Passed (83 source files, 0 issues).
 - `uv run pytest -q`: Passed (171 passed, 2 skipped).
 - `uv build`: Successfully built `dist/gemini_adk_study_coach_lab-1.1.1.tar.gz` and `dist/gemini_adk_study_coach_lab-1.1.1-py3-none-any.whl`.
@@ -217,3 +217,89 @@ No force-pushing.
 - Local wheel installation and CLI verification:
   - `gemini-adk-study-coach-lab version`: Returned `gemini-adk-study-coach-lab 1.1.1`.
   - `gemini-adk-study-coach-lab doctor`: Verified all bundled resources, brand SVGs, and runtime environment.
+
+### 6. Git Commit & GitHub CI Status
+- **Commits**:
+  - `647bf0bf22ec8b14fbaa225a02626d103651aaea`: `docs: improve architecture diagram and PyPI README for v1.1.1`
+  - `4af67449b09f4416da1402d0fb08691130e01477`: `fix(ci): make packaging version check dynamic with pyproject.toml`
+- **GitHub Actions CI Run**: `https://github.com/hastimal/gemini-adk-study-coach-lab/actions/runs/39399245553` (Conclusion: **success**, all jobs green).
+- **Release Safety Gate**: Release `v1.1.1` is staged and verified. STOP BEFORE ANY PYPI UPLOAD enforced until maintainer approval.
+
+---
+
+## Follow-Up Prompt Verbatim (Verification & Approval Gate)
+
+```markdown
+# NEXT MILESTONE — PYPI README VISUAL FIX v1.1.1
+
+PROJECT: gemini-adk-study-coach-lab
+PUBLISHED VERSION: 1.1.0
+TARGET VERSION: 1.1.1
+
+GOAL:
+Fix broken images on the PyPI page and improve
+the main architecture diagram without changing
+the working Study Coach functionality.
+
+1. Read GEMINI.md.
+
+2. Audit the current PyPI description and README.md.
+
+3. Find all broken images, relative links,
+   Mermaid diagrams and unsupported formatting.
+
+4. Fix image references using verified absolute
+   GitHub raw-content URLs.
+
+5. Create a high-quality static architecture
+   diagram in docs/images/:
+   - Version-controlled SVG source
+   - PNG version for reliable PyPI rendering
+   - Legible at normal README width
+   - Accurate Google ADK multi-agent architecture
+   - Consistent spacing, labels, arrows and colors
+
+6. Replace the poor front-page diagram with the
+   improved image while preserving detailed
+   technical diagrams elsewhere.
+
+7. Preview the resulting README on GitHub and
+   verify its PyPI-compatible rendering.
+
+8. Build the package and validate its long
+   description with twine check.
+
+9. Update version metadata to 1.1.1.
+
+10. Run all tests and CI quality gates.
+
+11. Confirm existing CLI behavior is unchanged.
+
+12. Save the full work log under docs/antigravity/.
+
+13. Show the exact changed files, diagram preview,
+    final README preview, and test results.
+
+STOP BEFORE PYPI PUBLICATION.
+
+Do not modify the v1.1.0 tag or release.
+Do not force-push.
+Do not publish v1.1.1 until I approve the preview.
+```
+
+### 7. Files Changed Inventory
+
+- `README-pypi.md`: Created PyPI-specific README using absolute GitHub HTTPS URLs for all images and documentation.
+- `README.md`: Replaced front-page Mermaid code fence with static `architecture-diagram.png` linking to SVG vector source.
+- `docs/images/architecture-diagram.svg`: New vector SVG architecture diagram (1000x720).
+- `docs/images/architecture-diagram.png`: High-resolution PNG raster render (269 KB) for universal Markdown support.
+- `pyproject.toml`: Bumped `version = "1.1.1"`, set `readme = "README-pypi.md"`.
+- `src/study_coach/__init__.py`: Bumped `__version__ = "1.1.1"`.
+- `tests/unit/test_packaging_and_cli.py`: Updated version assertions to `1.1.1`.
+- `uv.lock`: Resolved lockfile for package version `1.1.1`.
+- `.github/workflows/ci.yml`: Made wheel and sdist version verification dynamic using `pyproject.toml` version metadata.
+- `docs/cli.md`: Updated installation instructions and version output examples.
+- `docs/workshop/attendee-setup.md`: Updated pre-publication wheel install command.
+- `docs/antigravity/README.md`: Linked milestone 10 record.
+- `docs/antigravity/10-pypi-readme-images-and-diagram.md`: Full instruction archive, implementation details, and verification results.
+
