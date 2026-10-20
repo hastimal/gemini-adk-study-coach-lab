@@ -1,6 +1,7 @@
 """Entrypoint for running Study Coach with OpenTelemetry and Prometheus instrumentation."""
 
 import sys
+from pathlib import Path
 
 from dotenv import load_dotenv
 from streamlit.web import bootstrap
@@ -13,8 +14,9 @@ def main() -> None:
     load_dotenv()
     setup_tracing()
     start_metrics_server()
+    app_path = str(Path(__file__).resolve().parent / "app.py")
     bootstrap.run(
-        "ui/app.py",
+        app_path,
         False,
         sys.argv[1:],
         {"server_port": 8501, "server_address": "0.0.0.0"},

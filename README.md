@@ -201,7 +201,75 @@ For evaluation methodology, see [Evaluation Guide](docs/evaluation.md).
 
 ---
 
-## 11. Local Quick Start (Native Python)
+## 11. Quick Start with `gemini-adk-study-coach` CLI
+
+Run Gemini ADK Study Coach directly without cloning the repository!
+
+> **Note on PyPI Publication**: The `uvx` and `pipx` remote execution commands below are **planned and will be available once published to PyPI**. For local pre-publication validation, use the local wheel installation instructions below.
+
+### Planned PyPI / Zero-Clone Execution
+Once published to PyPI:
+```bash
+# Set your Gemini API key
+export GEMINI_API_KEY="your-api-key"
+
+# Instant zero-clone execution via uvx (recommended)
+uvx gemini-adk-study-coach
+
+# Or install globally via pipx
+pipx install gemini-adk-study-coach
+gemini-adk-study-coach
+```
+
+### Pre-Publication Validation (Local Wheel)
+To test the packaged application locally before PyPI publication:
+```bash
+# Build the distribution packages
+uv build
+
+# Install and run the wheel in an isolated tool environment
+uv tool install dist/gemini_adk_study_coach-1.1.0-py3-none-any.whl
+
+# Run the CLI
+gemini-adk-study-coach --help
+gemini-adk-study-coach doctor
+gemini-adk-study-coach start
+```
+
+### CLI Commands Reference
+
+| Command | Description | Example |
+| :--- | :--- | :--- |
+| `gemini-adk-study-coach` | Default command: starts Streamlit Study Coach UI on port 8501 | `gemini-adk-study-coach` |
+| `gemini-adk-study-coach start` | Starts Streamlit UI with options for custom port, address, and headless mode | `gemini-adk-study-coach start --port 8502 --headless` |
+| `gemini-adk-study-coach doctor` | Runs environment diagnostics (Python, dependencies, API keys, ports, Docker) | `gemini-adk-study-coach doctor` |
+| `gemini-adk-study-coach version` | Displays installed package version | `gemini-adk-study-coach version` |
+| `gemini-adk-study-coach --help` | Shows full CLI help and command options | `gemini-adk-study-coach --help` |
+
+#### Available Flags for `start`:
+- `-p, --port <PORT>`: Local port to bind Streamlit server (default: `8501`).
+- `--address <ADDR>`: Network address to bind server (default: `127.0.0.1`; use `0.0.0.0` for all interfaces).
+- `--headless`: Run Streamlit in headless mode without auto-opening a browser tab.
+
+#### Environment Variables & Credentials:
+- `GEMINI_API_KEY` or `GOOGLE_API_KEY`: Required for AI study plans, explanations, and quizzes.
+- `GEMINI_MODEL`: Model name (default: `gemini-3.8-flash`).
+- `.env` files in your active working directory are automatically detected and loaded.
+
+#### Upgrading & Uninstalling:
+```bash
+# Upgrade when using pipx
+pipx upgrade gemini-adk-study-coach
+
+# Uninstall
+pipx uninstall gemini-adk-study-coach
+# or via uv tool
+uv tool uninstall gemini-adk-study-coach
+```
+
+---
+
+## 12. Local Developer Setup (From Source Repository)
 
 > **No Docker required for the core learning workshop!**
 
