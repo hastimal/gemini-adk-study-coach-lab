@@ -68,13 +68,7 @@ jobs:
           /tmp/clean-wheel-venv/bin/gemini-adk-study-coach version | grep -F "1.1.0"
 
           # Verify built-in curriculum resources load
-          /tmp/clean-wheel-venv/bin/python -c '
-          from study_coach.tools.curriculum_tools import load_curriculum
-          data = load_curriculum()
-          topics = data.get("topics", [])
-          assert len(topics) >= 4, f"Curriculum failed to load: {data}"
-          print(f"Successfully loaded {len(topics)} curriculum topics from installed wheel.")
-          '
+          /tmp/clean-wheel-venv/bin/python -c 'from study_coach.tools.curriculum_tools import load_curriculum; data = load_curriculum(); assert len(data.get("topics", [])) >= 4; print("Successfully loaded", len(data["topics"]), "curriculum topics from installed wheel.")'
         )
 
     - name: Verify Clean Sdist Installation in Isolated Virtualenv
@@ -105,11 +99,5 @@ jobs:
           /tmp/clean-sdist-venv/bin/gemini-adk-study-coach version | grep -F "1.1.0"
 
           # Verify built-in curriculum resources load
-          /tmp/clean-sdist-venv/bin/python -c '
-          from study_coach.tools.curriculum_tools import load_curriculum
-          data = load_curriculum()
-          topics = data.get("topics", [])
-          assert len(topics) >= 4, f"Curriculum failed to load: {data}"
-          print(f"Successfully loaded {len(topics)} curriculum topics from installed sdist.")
-          '
+          /tmp/clean-sdist-venv/bin/python -c 'from study_coach.tools.curriculum_tools import load_curriculum; data = load_curriculum(); assert len(data.get("topics", [])) >= 4; print("Successfully loaded", len(data["topics"]), "curriculum topics from installed sdist.")'
         )
