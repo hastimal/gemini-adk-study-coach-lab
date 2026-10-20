@@ -54,6 +54,8 @@ jobs:
 
         /tmp/clean-wheel-venv/bin/python -m pip install dist/*.whl
 
+        EXPECTED_VERSION=$(grep -E '^version = "[^"]+"' pyproject.toml | cut -d'"' -f2)
+
         (
           cd /tmp
           # Primary CLI validation
@@ -61,11 +63,11 @@ jobs:
           /tmp/clean-wheel-venv/bin/gemini-adk-study-coach-lab doctor
           VERSION_OUTPUT=$(/tmp/clean-wheel-venv/bin/gemini-adk-study-coach-lab version)
           echo "$VERSION_OUTPUT"
-          echo "$VERSION_OUTPUT" | grep -F "1.1.0"
+          echo "$VERSION_OUTPUT" | grep -F "$EXPECTED_VERSION"
 
           # Backward-compatible alias validation
           /tmp/clean-wheel-venv/bin/gemini-adk-study-coach --help
-          /tmp/clean-wheel-venv/bin/gemini-adk-study-coach version | grep -F "1.1.0"
+          /tmp/clean-wheel-venv/bin/gemini-adk-study-coach version | grep -F "$EXPECTED_VERSION"
 
           # Verify built-in curriculum resources load
           /tmp/clean-wheel-venv/bin/python -c 'from study_coach.tools.curriculum_tools import load_curriculum; data = load_curriculum(); assert len(data.get("topics", [])) >= 4; print("Successfully loaded", len(data["topics"]), "curriculum topics from installed wheel.")'
@@ -84,6 +86,7 @@ jobs:
           exit 1
         fi
 
+        EXPECTED_VERSION=$(grep -E '^version = "[^"]+"' pyproject.toml | cut -d'"' -f2)
         /tmp/clean-sdist-venv/bin/python -m pip install dist/*.tar.gz
 
         (
@@ -93,10 +96,10 @@ jobs:
           /tmp/clean-sdist-venv/bin/gemini-adk-study-coach-lab doctor
           VERSION_OUTPUT=$(/tmp/clean-sdist-venv/bin/gemini-adk-study-coach-lab version)
           echo "$VERSION_OUTPUT"
-          echo "$VERSION_OUTPUT" | grep -F "1.1.0"
+          echo "$VERSION_OUTPUT" | grep -F "$EXPECTED_VERSION"
 
           # Backward-compatible alias validation
-          /tmp/clean-sdist-venv/bin/gemini-adk-study-coach version | grep -F "1.1.0"
+          /tmp/clean-sdist-venv/bin/gemini-adk-study-coach version | grep -F "$EXPECTED_VERSION"
 
           # Verify built-in curriculum resources load
           /tmp/clean-sdist-venv/bin/python -c 'from study_coach.tools.curriculum_tools import load_curriculum; data = load_curriculum(); assert len(data.get("topics", [])) >= 4; print("Successfully loaded", len(data["topics"]), "curriculum topics from installed sdist.")'
