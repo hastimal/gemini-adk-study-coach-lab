@@ -21,6 +21,7 @@ The project is divided into eight sequential milestones, each representing a cle
 - **M7-B: Agent Ops & Evaluations GUI** - Dedicated Streamlit visual tabs for real-time observability indicators and non-blocking evaluation suite. ([`07b-agent-ops-gui.md`](file:///Users/hastimal.jangid/Desktop/hmeb/GitHub/gemini-adk-study-coach-lab/docs/antigravity/07b-agent-ops-gui.md))
 - **M7-C: Developer Lab Launcher** - Unified local developer launcher (`./scripts/run_local.sh`) with health checks. ([`07c-developer-lab-launcher.md`](file:///Users/hastimal.jangid/Desktop/hmeb/GitHub/gemini-adk-study-coach-lab/docs/antigravity/07c-developer-lab-launcher.md))
 - **M8: Workshop-Ready Release** - Finalized workshop guide suite, future feature roadmap (Multi-Certification & Document RAG), system architecture specifications, and v1.0.0 release. ([`08-workshop-ready-release.md`](file:///Users/hastimal.jangid/Desktop/hmeb/GitHub/gemini-adk-study-coach-lab/docs/antigravity/08-workshop-ready-release.md))
+- **Issue #3: PyPI Package + uvx CLI** - Package Study Coach as an installable Python application with CLI (`start`, `doctor`, `version`), bundled curriculum & Streamlit UI, wheel/sdist packaging, CI workflow, and zero-clone execution. ([`09-pypi-uvx-cli.md`](file:///Users/hastimal.jangid/Desktop/hmeb/GitHub/gemini-adk-study-coach-lab/docs/antigravity/09-pypi-uvx-cli.md))
 Only one milestone should be implemented at a time. Future milestones remain as planned placeholders until instructed to be implemented.
 
 

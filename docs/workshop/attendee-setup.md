@@ -45,7 +45,28 @@ This guide gets you completely set up to participate in the **Gemini + Google AD
 
 ---
 
-## 3. Clone and Environment Setup
+## 3. Workshop Launch Options
+
+### Option A: Zero-Clone Execution via `uvx` (Planned Post-PyPI Publication)
+
+> **Notice**: The `uvx` and `pipx` commands are planned for official PyPI availability.
+
+```bash
+# Configure API Key
+export GEMINI_API_KEY="your-gemini-api-key"
+
+# Run immediately without cloning repository
+uvx gemini-adk-study-coach
+```
+
+For pre-publication local wheel testing:
+```bash
+uv tool install dist/gemini_adk_study_coach-1.1.0-py3-none-any.whl
+gemini-adk-study-coach doctor
+gemini-adk-study-coach start
+```
+
+### Option B: Clone and Developer Environment Setup (From Source)
 
 1. Clone the repository:
    ```bash

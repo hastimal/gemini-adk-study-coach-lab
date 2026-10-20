@@ -7,21 +7,53 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  test-and-package:
+    name: Lint, Test & Packaging Verification
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-    - name: Set up Python
+      with:
+        enable-cache: true
+
+    - name: Set up Python 3.12
       run: uv python install 3.12
+
     - name: Install dependencies
       run: uv sync --all-extras --dev
-    - name: Run Ruff Check
+
+    - name: Run Ruff Linter
       run: uv run ruff check .
+
     - name: Run Ruff Format Check
       run: uv run ruff format --check .
-    - name: Run mypy
+
+    - name: Run mypy Type Check
       run: uv run mypy .
-    - name: Run pytest
+
+    - name: Run pytest Suite
       run: uv run pytest -q
+
+    - name: Build Wheel and Source Distribution
+      run: uv build
+
+    - name: Verify Clean Wheel Installation in Isolated Virtualenv
+      run: |
+        python3 -m venv /tmp/clean-wheel-venv
+        /tmp/clean-wheel-venv/bin/pip install --upgrade pip
+        /tmp/clean-wheel-venv/bin/pip install dist/gemini_adk_study_coach-*.whl
+        cd /tmp
+        /tmp/clean-wheel-venv/bin/gemini-adk-study-coach --help
+        /tmp/clean-wheel-venv/bin/gemini-adk-study-coach version
+        /tmp/clean-wheel-venv/bin/gemini-adk-study-coach doctor
+
+    - name: Verify Clean Sdist Installation in Isolated Virtualenv
+      run: |
+        python3 -m venv /tmp/clean-sdist-venv
+        /tmp/clean-sdist-venv/bin/pip install --upgrade pip
+        /tmp/clean-sdist-venv/bin/pip install dist/gemini_adk_study_coach-*.tar.gz
+        cd /tmp
+        /tmp/clean-sdist-venv/bin/gemini-adk-study-coach version
+        /tmp/clean-sdist-venv/bin/gemini-adk-study-coach doctor
