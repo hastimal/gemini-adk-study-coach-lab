@@ -59,7 +59,7 @@ gemini-adk-study-coach start [OPTIONS]
 
 **Options**:
 - `-p, --port <PORT>`: Specify local port (default: `8501`).
-- `--address <ADDR>`: Specify network binding address (default: `0.0.0.0`).
+- `--address <ADDR>`: Specify network binding address (default: `127.0.0.1`; use `0.0.0.0` for all interfaces).
 - `--headless`: Run without automatically opening a browser tab.
 
 **Examples**:

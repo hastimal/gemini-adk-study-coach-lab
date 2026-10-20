@@ -248,7 +248,7 @@ gemini-adk-study-coach start
 
 #### Available Flags for `start`:
 - `-p, --port <PORT>`: Local port to bind Streamlit server (default: `8501`).
-- `--address <ADDR>`: Network address to bind server (default: `0.0.0.0`).
+- `--address <ADDR>`: Network address to bind server (default: `127.0.0.1`; use `0.0.0.0` for all interfaces).
 - `--headless`: Run Streamlit in headless mode without auto-opening a browser tab.
 
 #### Environment Variables & Credentials:

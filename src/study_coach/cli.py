@@ -14,7 +14,7 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
 from study_coach import __version__
 
@@ -96,7 +96,7 @@ def cmd_version(args: argparse.Namespace) -> int:
 def cmd_doctor(args: argparse.Namespace) -> int:
     """Runs environment, credential, dependency, and port diagnostics."""
     # Ensure current working directory .env is loaded if present
-    load_dotenv()
+    load_dotenv(find_dotenv(usecwd=True))
 
     print(
         "================================================================================"
@@ -285,10 +285,10 @@ def cmd_doctor(args: argparse.Namespace) -> int:
 
 def cmd_start(args: argparse.Namespace) -> int:
     """Launches the Streamlit Study Coach application."""
-    load_dotenv()
+    load_dotenv(find_dotenv(usecwd=True))
 
     port = getattr(args, "port", 8501)
-    address = getattr(args, "address", "0.0.0.0")
+    address = getattr(args, "address", "127.0.0.1")
     headless = getattr(args, "headless", False)
 
     try:
@@ -298,9 +298,9 @@ def cmd_start(args: argparse.Namespace) -> int:
         return 1
 
     # Check for port conflicts before starting
-    if is_port_in_use(port, host="127.0.0.1"):
+    if is_port_in_use(port, host=address):
         print(
-            f"Error: Port {port} is already in use by another process.\n"
+            f"Error: Port {port} is already in use on {address} by another process.\n"
             f"Specify a different port using: gemini-adk-study-coach start --port <PORT>\n"
             f"Example: gemini-adk-study-coach start --port 8502",
             file=sys.stderr,
@@ -326,9 +326,7 @@ def cmd_start(args: argparse.Namespace) -> int:
     )
     print("Starting Streamlit application server...")
     print(f"  Local URL:   http://localhost:{port}")
-    if address == "0.0.0.0":
-        print(f"  Network URL: http://0.0.0.0:{port}")
-    else:
+    if address not in ("127.0.0.1", "localhost"):
         print(f"  Network URL: http://{address}:{port}")
     print("\nPress Ctrl+C to stop the application server.")
     print(
@@ -403,8 +401,8 @@ def build_parser() -> argparse.ArgumentParser:
     start_parser.add_argument(
         "--address",
         type=str,
-        default="0.0.0.0",
-        help="Network address to bind server (default: 0.0.0.0).",
+        default="127.0.0.1",
+        help="Network address to bind server (default: 127.0.0.1; use 0.0.0.0 for all interfaces).",
     )
     start_parser.add_argument(
         "--headless",

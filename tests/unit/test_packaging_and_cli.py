@@ -202,7 +202,7 @@ def test_cli_missing_credentials_handling(
     """11. Verify doctor handles missing API credentials gracefully without crashing."""
     import argparse
 
-    monkeypatch.setattr("study_coach.cli.load_dotenv", lambda: None)
+    monkeypatch.setattr("study_coach.cli.load_dotenv", lambda *args, **kwargs: None)
     monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
 
@@ -292,3 +292,59 @@ def test_mask_key() -> None:
     assert masked.startswith("AIza...")
     assert masked.endswith("2345 (length: 43)")
     assert "DummySecret" not in masked
+
+
+def test_cli_address_defaults_and_options(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """16. Verify CLI start defaults to 127.0.0.1 and supports explicit --address 0.0.0.0."""
+    from study_coach.cli import build_parser, cmd_start
+
+    parser = build_parser()
+
+    # Default address should be 127.0.0.1
+    default_args = parser.parse_args(["start"])
+    assert default_args.address == "127.0.0.1"
+
+    # Explicit 0.0.0.0 address
+    custom_args = parser.parse_args(["start", "--address", "0.0.0.0"])
+    assert custom_args.address == "0.0.0.0"
+
+    # Verify start command invocation contains correct --server.address
+    executed_cmds: list[list[str]] = []
+
+    def mock_run(cmd: list[str], check: bool = False) -> object:
+        executed_cmds.append(cmd)
+
+        class MockProc:
+            returncode = 0
+
+        return MockProc()
+
+    monkeypatch.setattr("subprocess.run", mock_run)
+    monkeypatch.setattr(
+        "study_coach.cli.is_port_in_use", lambda port, host="127.0.0.1": False
+    )
+
+    # Test default launch
+    ret = cmd_start(default_args)
+    assert ret == 0
+    assert len(executed_cmds) == 1
+    assert "--server.address" in executed_cmds[0]
+    addr_idx = executed_cmds[0].index("--server.address")
+    assert executed_cmds[0][addr_idx + 1] == "127.0.0.1"
+    captured = capsys.readouterr()
+    assert "Local URL:   http://localhost:8501" in captured.out
+    assert (
+        "Network URL" not in captured.out
+    )  # localhost/127.0.0.1 doesn't print public Network URL
+
+    # Test explicit 0.0.0.0 launch
+    ret_custom = cmd_start(custom_args)
+    assert ret_custom == 0
+    assert len(executed_cmds) == 2
+    assert "--server.address" in executed_cmds[1]
+    addr_idx_custom = executed_cmds[1].index("--server.address")
+    assert executed_cmds[1][addr_idx_custom + 1] == "0.0.0.0"
+    captured_custom = capsys.readouterr()
+    assert "Network URL: http://0.0.0.0:8501" in captured_custom.out

@@ -768,3 +768,68 @@ $ docker compose config
 - Remote `uvx gemini-adk-study-coach` and `pipx install gemini-adk-study-coach` will be available immediately upon official PyPI publication.
 - Docker observability (Prometheus/Grafana/Tempo) remains optional and requires running Docker Compose from the cloned repository.
 
+---
+
+## PR #7 — Final Review Fixes Verification
+
+### 1. Changes Implemented
+- **CLI Default Bind Address**: Updated default Streamlit binding host from `0.0.0.0` to `127.0.0.1` in `src/study_coach/cli.py` (`cmd_start` and `build_parser`).
+- **Preserved Explicit `--address` Option**: Users and container runners can explicitly pass `--address 0.0.0.0` to bind all interfaces when required.
+- **Environment Detection via `find_dotenv(usecwd=True)`**: Ensured `.env` files in the user's active working directory are reliably discovered even when running as an installed console script outside the repo.
+- **Documentation Updated**: Synchronized `README.md` and `docs/cli.md` with the new default `127.0.0.1` address and `--address` usage.
+- **Added CLI Address Unit Test**: Added `test_cli_address_defaults_and_options` in `tests/unit/test_packaging_and_cli.py` validating default `127.0.0.1`, `--address 0.0.0.0`, and server launch arguments.
+
+### 2. External Launch Verification (Outside Git Checkout)
+- Installed built wheel into an isolated clean virtual environment outside Git checkout (`/tmp/pkg_test_env`).
+- Executed from `/tmp`:
+  - `gemini-adk-study-coach --help`: Exited with code 0.
+  - `gemini-adk-study-coach start --help`: Verified default `--address 127.0.0.1; use 0.0.0.0 for all interfaces`.
+  - `gemini-adk-study-coach version`: Returned `gemini-adk-study-coach 1.1.0`.
+  - `gemini-adk-study-coach doctor`: Verified all 5 bundled assets found, ports checked, status READY.
+  - `gemini-adk-study-coach start --port 8503 --headless`: Uvicorn server started cleanly on `127.0.0.1:8503`, health check `curl -s http://127.0.0.1:8503/_stcore/health` returned `ok`.
+
+### 3. Real UI & Workflow Interaction Verification
+Executed end-to-end verification of the packaged application UI using the official Streamlit testing lifecycle (`verify_ui_flow.py`):
+- **Curriculum Loading**: Successfully loaded all 4 core syllabus topics (`genai_concepts`, `llm_architecture`, `responsible_ai`, `vertex_ai_studio`).
+- **Initial App Render**: Rendered header `🎓 Gemini + Google ADK Multi-Agent Study Coach` without uncaught exceptions.
+- **Study Plan Generation**: Generated and rendered 2-day study plan with daily activity breakdown and study timetable.
+- **Navigate to Learn Topic**:
+  - Rendered architecture Mermaid diagram code block.
+  - Rendered 17 interactive code demonstration blocks.
+  - Rendered curated learning resource cards and brand provider SVG badges.
+- **Import and Asset Errors**: Zero import errors, zero missing asset errors.
+
+### 4. Security & Secret Masking Verification
+- Inspected `gemini-adk-study-coach doctor` diagnostic output:
+  - Formatted active key with `mask_key`: `AQ.A...bbrQ (length: 53)` or `AIza...4321 (length: 55)`.
+  - Full secret body is never exposed or logged.
+- Verified distributions (`test_no_secrets_in_distributions`):
+  - Wheel and sdist archives contain zero `.env` or sensitive credential files.
+
+### 5. Final Quality Gate Results
+```bash
+$ uv run ruff check .
+All checks passed!
+
+$ uv run ruff format --check .
+118 files already formatted
+
+$ uv run mypy .
+Success: no issues found in 83 source files
+
+$ uv run pytest -q
+........................................................................ [ 41%]
+........................................................................ [ 83%]
+.............................                                            [100%]
+173 passed in 9.98s
+
+$ uv build
+Building source distribution...
+Building wheel from source distribution...
+Successfully built dist/gemini_adk_study_coach-1.1.0.tar.gz
+Successfully built dist/gemini_adk_study_coach-1.1.0-py3-none-any.whl
+```
+Test suite: 173 passed (100% pass rate).
+All quality gates verified cleanly.
+
+
