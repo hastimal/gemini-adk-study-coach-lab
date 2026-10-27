@@ -275,22 +275,28 @@ uv run streamlit run ui/app.py
 Access the application in your browser at:  
 👉 **http://localhost:8501**
 
-### 3. Unified Developer Lab Launcher (Optional)
-To launch a unified launcher dashboard with health indicators across all ports:
+### 3. Unified Developer Lab Launcher & Full-Demo Command
+To launch both the Streamlit Study Coach and Developer Launcher in one command:
 ```bash
-./scripts/run_local.sh
+./scripts/run_local.sh --full-demo
 ```
-Access the launcher at: **http://localhost:8500**
+- **Streamlit Study Coach**: [http://localhost:8501](http://localhost:8501)
+- **Developer Lab Launcher**: [http://localhost:8500](http://localhost:8500)
+- **Google ADK Developer UI**: [http://127.0.0.1:8000](http://127.0.0.1:8000) (via `./scripts/run_local.sh --adk-only`)
+
+For presenter and attendee walkthrough scripts, see the [Full Demo Runbook](docs/workshop/full-demo-runbook.md).
 
 ---
 
-## 12. Optional Docker Observability Stack
+## 13. Optional Docker Observability Stack
+
+> **Docker is completely optional!** The core Study Coach runs natively without Docker.
 
 If Docker Desktop is installed and you want the full Grafana, Prometheus, and Tempo telemetry cluster:
 
 ```bash
-# Build and launch all five services
-docker compose --profile observability up -d --build
+# Build and launch the observability cluster
+docker compose --profile observability up -d
 
 # Verify container health
 docker compose --profile observability ps
@@ -304,16 +310,27 @@ docker compose --profile observability ps
 - **Grafana Dashboards**: [http://localhost:3000](http://localhost:3000) (User/Pass: `admin` / `admin`)
 - **Grafana Tempo Trace Explorer**: [http://localhost:3000/explore](http://localhost:3000/explore)
 
-To safely stop containers:
+### Configurable Host Ports
+If default ports collide with existing host containers (e.g., port 9090 or 3000), set environment variables in your `.env` file:
 ```bash
-docker compose --profile observability down
+HOST_STREAMLIT_PORT=8501
+HOST_APP_METRICS_PORT=8001
+HOST_PROMETHEUS_PORT=9091
+HOST_GRAFANA_PORT=3001
+HOST_TEMPO_PORT=3200
+```
+
+To safely stop containers while preserving all existing Docker volumes:
+```bash
+docker compose --profile observability stop
 ```
 
 ---
 
-## 13. Workshop Guide (GDG / DevFest)
+## 14. Workshop Guide (GDG / DevFest)
 
 Complete documentation is available in `docs/workshop/` for organizing a 60-minute hands-on developer lab:
+- **[Full-Demo Runbook](docs/workshop/full-demo-runbook.md)**: End-to-end 15-minute presentation script and port architecture.
 - **[Instructor Guide](docs/workshop/instructor-guide.md)**: 60-minute session timeline, speaking goals, and live fallbacks.
 - **[Attendee Setup Guide](docs/workshop/attendee-setup.md)**: Platform-specific guides for macOS, Linux, and Windows.
 - **[Demo Script](docs/workshop/demo-script.md)**: Step-by-step speaker notes and student prompt walkthrough.

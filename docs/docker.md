@@ -38,13 +38,25 @@ The [`Dockerfile`](file:///Users/hastimal.jangid/Desktop/hmeb/GitHub/gemini-adk-
 
 The [`docker-compose.yml`](file:///Users/hastimal.jangid/Desktop/hmeb/GitHub/gemini-adk-study-coach-lab/docker-compose.yml) coordinates environment variable injection and container lifecycle:
 
-### Build and Start Container
+### Build and Start Containers
 ```bash
-# Start in foreground
-docker compose up --build
-
-# Or start in detached (background) mode
+# Start core Streamlit UI only
 docker compose up --build -d
+
+# Start full stack including Prometheus, Tempo, Grafana, and OTel Collector
+docker compose --profile observability up -d
+```
+
+### Configurable Host Ports
+If default ports collide with existing host containers (e.g. port 9090 or 3000), set environment variables in your `.env` file:
+```bash
+HOST_STREAMLIT_PORT=8501
+HOST_APP_METRICS_PORT=8001
+HOST_PROMETHEUS_PORT=9091
+HOST_GRAFANA_PORT=3001
+HOST_TEMPO_PORT=3200
+HOST_OTEL_HTTP_PORT=4318
+HOST_OTEL_GRPC_PORT=4317
 ```
 
 ### Check Container Status
@@ -53,8 +65,12 @@ docker compose ps
 ```
 Output:
 ```
-NAME                      IMAGE                                       STATUS                    PORTS
-study-coach-workshop-ui   gemini-adk-study-coach-lab-study-coach-ui   Up (healthy)   0.0.0.0:8501->8501/tcp
+NAME                         IMAGE                                          STATUS                    PORTS
+study-coach-workshop-ui      gemini-adk-study-coach-lab-study-coach-ui      Up (healthy)              0.0.0.0:8501->8501/tcp, 0.0.0.0:8001->8001/tcp
+study-coach-otel-collector   otel/opentelemetry-collector-contrib:0.111.0   Up                        0.0.0.0:4317-4318->4317-4318/tcp, 0.0.0.0:8889->8889/tcp
+study-coach-prometheus       prom/prometheus:v2.54.1                        Up                        0.0.0.0:9090->9090/tcp
+study-coach-tempo            grafana/tempo:2.6.1                            Up                        0.0.0.0:3200->3200/tcp
+study-coach-grafana          grafana/grafana:11.2.0                         Up                        0.0.0.0:3000->3000/tcp
 ```
 
 ### Inspect Application Logs
@@ -62,9 +78,10 @@ study-coach-workshop-ui   gemini-adk-study-coach-lab-study-coach-ui   Up (health
 docker compose logs -f --tail=100
 ```
 
-### Stop and Clean Up
+### Stop Services Cleanly
 ```bash
-docker compose down
+# Stop containers without deleting any volumes
+docker compose --profile observability stop
 ```
 
 ---

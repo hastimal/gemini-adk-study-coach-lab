@@ -89,6 +89,28 @@ For full CLI documentation, see [CLI Reference](https://github.com/hastimal/gemi
 
 ---
 
+## Docker & Full Observability Stack (Optional)
+
+> **Docker is completely optional!** The core Study Coach application runs natively without Docker via `uvx` or `pipx`.
+
+If you wish to run the full OpenTelemetry distributed tracing and metrics stack locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/hastimal/gemini-adk-study-coach-lab.git
+cd gemini-adk-study-coach-lab
+
+# Start the observability services (Prometheus, Tempo, Grafana, OTel Collector)
+docker compose --profile observability up -d
+
+# Run both the Study Coach UI and Developer Launcher in one command
+./scripts/run_local.sh --full-demo
+```
+
+Configurable host ports (`HOST_PROMETHEUS_PORT`, `HOST_GRAFANA_PORT`, `HOST_APP_METRICS_PORT`) allow running alongside existing container stacks without port collisions.
+
+---
+
 ## Screenshots
 
 ### Personalized Study Planner
@@ -105,6 +127,7 @@ For full CLI documentation, see [CLI Reference](https://github.com/hastimal/gemi
 ## Workshop & Documentation Links
 
 - **GitHub Repository**: [https://github.com/hastimal/gemini-adk-study-coach-lab](https://github.com/hastimal/gemini-adk-study-coach-lab)
+- **Full Demo Runbook**: [Full Demo Runbook](https://github.com/hastimal/gemini-adk-study-coach-lab/blob/main/docs/workshop/full-demo-runbook.md)
 - **Hands-On Workshop Guide**: [Workshop Walkthrough](https://github.com/hastimal/gemini-adk-study-coach-lab/tree/main/docs/workshop)
 - **Architecture Deep-Dive**: [Architecture Specifications](https://github.com/hastimal/gemini-adk-study-coach-lab/blob/main/docs/architecture.md)
 - **Observability Setup**: [Observability Guide](https://github.com/hastimal/gemini-adk-study-coach-lab/blob/main/docs/observability.md)
