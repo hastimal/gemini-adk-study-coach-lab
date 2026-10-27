@@ -83,3 +83,6 @@ dev = [
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]
+markers = [
+    "live: marks tests requiring live Gemini API access and network calls (opt-in)",
+]

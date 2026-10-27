@@ -19,7 +19,7 @@ flowchart TD
         Plugin["ADKObservabilityPlugin (BasePlugin)"]
         TraceDecorator["@trace_workflow_step Decorator"]
         Tracer["OpenTelemetry TracerProvider"]
-        PromServer["Prometheus Metrics Server (Port 8000)"]
+        PromServer["Prometheus Metrics Server (Port 8001)"]
     end
 
     subgraph TelemetryInfra ["Docker Compose Profile: observability"]
@@ -43,7 +43,7 @@ flowchart TD
     Tracer -- "OTLP HTTP :4318" --> Collector
     Collector -- "OTLP gRPC :4317" --> Tempo
     Collector -- "Prometheus :8889" --> Prometheus
-    PromServer -- "Scrape :8000" --> Prometheus
+    PromServer -- "Scrape :8001" --> Prometheus
     Prometheus --> Grafana
     Tempo --> Grafana
 ```
@@ -68,7 +68,7 @@ Decorates high-level workflow boundaries (`WorkshopFacade.explain_topic`, `creat
 - Emits parent application spans linking lower-level ADK agent and tool executions.
 
 ### 2.3 Prometheus Metrics Registry (`study_coach.observability.metrics`)
-Exposes application metrics on HTTP port 8000 using Prometheus format:
+Exposes application metrics on HTTP port 8001 using Prometheus format:
 - `study_coach_requests_total`: Incoming user requests across all workflows.
 - `study_coach_request_duration_seconds`: Workflow execution latency histogram.
 - `study_coach_agent_calls_total`: Invocations by agent name and model.
@@ -111,7 +111,7 @@ docker compose --profile observability ps
 
 | Service | Container Name | Port | Description |
 |---|---|---|---|
-| **Streamlit UI** | `study-coach-workshop-ui` | `8501`, `8000` | Web application + Prometheus metrics |
+| **Streamlit UI** | `study-coach-workshop-ui` | `8501`, `8001` | Web application + Prometheus metrics |
 | **OTel Collector** | `study-coach-otel-collector` | `4317`, `4318`, `8889` | OpenTelemetry Collector receiver & exporter |
 | **Grafana Tempo** | `study-coach-tempo` | `3200` | High-volume distributed tracing backend |
 | **Prometheus** | `study-coach-prometheus` | `9090` | Time-series metrics scraper and storage |
@@ -146,7 +146,7 @@ The Streamlit application includes an interactive **"🔭 Agent Ops"** tab ([`ui
 
 ```bash
 # Verify Prometheus metrics endpoint
-curl -s http://localhost:8000/metrics | grep study_coach
+curl -s http://localhost:8001/metrics | grep study_coach
 
 # Check Prometheus target status
 curl -s http://localhost:9090/api/v1/targets | python3 -m json.tool

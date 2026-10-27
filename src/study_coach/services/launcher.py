@@ -95,6 +95,16 @@ DEFAULT_SERVICES = [
         "health_endpoint": "http://localhost:9090/-/healthy",
         "action_label": "Open Prometheus Targets",
     },
+    {
+        "id": "app_metrics",
+        "name": "Application Metrics Endpoint",
+        "category": "Telemetry Exporter",
+        "description": "Prometheus metrics scrape target exposed by the Study Coach runtime.",
+        "url": "http://localhost:8001/metrics",
+        "port": 8001,
+        "health_endpoint": "http://localhost:8001/metrics",
+        "action_label": "View Raw Metrics",
+    },
 ]
 
 

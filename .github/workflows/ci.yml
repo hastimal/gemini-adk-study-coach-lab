@@ -36,8 +36,14 @@ jobs:
     - name: Run pytest Suite
       run: uv run pytest -q
 
+    - name: Run PyPI README and Image Validation
+      run: uv run python scripts/validate_pypi_readme.py
+
     - name: Build Wheel and Source Distribution
       run: uv build
+
+    - name: Run Twine Strict Distribution Check
+      run: uvx twine check --strict dist/*
 
     - name: Verify Clean Wheel Installation in Isolated Virtualenv
       run: |

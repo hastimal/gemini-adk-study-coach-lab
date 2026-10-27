@@ -224,7 +224,8 @@ def cmd_doctor(args: argparse.Namespace) -> int:
     print("\n🌐 Port Availability:")
     ports_to_check = [
         (8501, "Study Coach Web UI (Default)"),
-        (8000, "Google ADK Web / Prometheus Metrics"),
+        (8000, "Google ADK Web UI (Standalone playground)"),
+        (8001, "Study Coach Prometheus Metrics"),
         (8500, "Developer Lab Launcher (Local scripts)"),
     ]
     for port, label in ports_to_check:

@@ -3,7 +3,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/gemini-adk-study-coach-lab.svg)](https://pypi.org/project/gemini-adk-study-coach-lab/)
 [![Python versions](https://img.shields.io/pypi/pyversions/gemini-adk-study-coach-lab.svg)](https://pypi.org/project/gemini-adk-study-coach-lab/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hastimal/gemini-adk-study-coach-lab/blob/main/LICENSE)
-[![Google ADK](https://img.shields.io/badge/Google%20ADK-0.1.0-blue.svg)](https://google.github.io/agent-development-kit/)
+[![Google ADK](https://img.shields.io/badge/Google%20ADK-0.1.0-blue.svg)](https://github.com/google/adk)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.42.0-FF4B4B.svg)](https://streamlit.io/)
 
 Production-grade agentic AI study coach for technical certification preparation, combining **Google Agent Development Kit (ADK)** multi-agent orchestration, **Google Gemini 3.8 Flash**, deterministic Python validation, and an interactive **Streamlit** user interface.
@@ -43,7 +43,7 @@ Or install using standard `pip`:
 
 ```bash
 pip install gemini-adk-study-coach-lab
-gemini-adk-study-coach-lab run
+gemini-adk-study-coach-lab start
 ```
 
 ---
@@ -56,15 +56,20 @@ The `gemini-adk-study-coach-lab` command-line interface provides utilities for r
 # Verify your local environment and Gemini API credentials
 gemini-adk-study-coach-lab doctor
 
-# Start the Streamlit application on a custom port
-gemini-adk-study-coach-lab run --port 8501
+# Start the Streamlit application (default port 8501)
+gemini-adk-study-coach-lab start
+
+# Or start on a custom port
+gemini-adk-study-coach-lab start --port 8501
 
 # Allow external access (e.g., inside Docker or cloud instances)
-gemini-adk-study-coach-lab run --address 0.0.0.0 --port 8501
+gemini-adk-study-coach-lab start --address 0.0.0.0 --port 8501
 
 # Inspect package version
 gemini-adk-study-coach-lab version
 ```
+
+> **Note on Docker**: Docker is completely optional. The full interactive Study Coach runs locally with pure Python. Docker Compose is only needed if you wish to run the local OpenTelemetry, Prometheus, and Grafana telemetry stack.
 
 For full CLI documentation, see [CLI Reference](https://github.com/hastimal/gemini-adk-study-coach-lab/blob/main/docs/cli.md).
 

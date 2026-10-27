@@ -39,7 +39,7 @@ RUN useradd -m -u 1000 appuser && \
 USER appuser
 
 # Expose Streamlit default port and Prometheus metrics port
-EXPOSE 8501 8000
+EXPOSE 8501 8001
 
 # Configure healthcheck
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \

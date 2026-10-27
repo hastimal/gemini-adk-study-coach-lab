@@ -114,7 +114,7 @@ Study Coach includes deep telemetry using standard open-source tools:
 
 - **OpenTelemetry Collector**: Receives traces and metrics over OTLP gRPC (`4317`) and HTTP (`4318`).
 - **Grafana Tempo**: Distributed trace storage indexing agent reasoning, tool execution, and LLM inference spans.
-- **Prometheus**: Scrapes application metrics from port `8000/metrics` and Collector metrics from `8889`.
+- **Prometheus**: Scrapes application metrics from port `8001/metrics` and Collector metrics from `8889`.
 - **Grafana**: Pre-provisioned 11-panel dashboard (`study-coach-main`) tracking request volume, agent latencies, quiz submission distributions, and adaptive replans.
 - **🔭 Agent Ops GUI**: In-app Streamlit tab providing real-time target health indicators, container readiness, and one-click links to Grafana and Tempo Explore.
 
@@ -299,7 +299,7 @@ docker compose --profile observability ps
 ### Endpoints
 - **Streamlit Web UI**: [http://localhost:8501](http://localhost:8501)
 - **Developer Lab Launcher**: [http://localhost:8500](http://localhost:8500)
-- **Application Prometheus Metrics**: [http://localhost:8000/metrics](http://localhost:8000/metrics)
+- **Application Prometheus Metrics**: [http://localhost:8001/metrics](http://localhost:8001/metrics)
 - **Prometheus TSDB**: [http://localhost:9090](http://localhost:9090)
 - **Grafana Dashboards**: [http://localhost:3000](http://localhost:3000) (User/Pass: `admin` / `admin`)
 - **Grafana Tempo Trace Explorer**: [http://localhost:3000/explore](http://localhost:3000/explore)

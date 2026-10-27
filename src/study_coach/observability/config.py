@@ -13,7 +13,7 @@ class ObservabilityConfig:
     environment: str = "development"
     otlp_endpoint: str = "http://localhost:4318"
     otlp_protocol: str = "http"  # 'http' or 'grpc'
-    metrics_port: int = 8000
+    metrics_port: int = 8001
     enabled: bool = True
     export_traces: bool = True
     export_metrics: bool = True
@@ -38,7 +38,7 @@ class ObservabilityConfig:
                 "OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4318"
             ),
             otlp_protocol=os.getenv("OTEL_EXPORTER_OTLP_PROTOCOL", "http").lower(),
-            metrics_port=int(os.getenv("OTEL_METRICS_PORT", "8000")),
+            metrics_port=int(os.getenv("OTEL_METRICS_PORT", "8001")),
             enabled=enabled,
             export_traces=export_traces,
             export_metrics=export_metrics,

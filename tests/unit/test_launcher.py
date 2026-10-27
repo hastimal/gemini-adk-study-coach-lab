@@ -15,7 +15,7 @@ from study_coach.services.launcher import (
 
 
 def test_default_services_configuration() -> None:
-    """Verifies that all 7 required developer lab services are defined."""
+    """Verifies that all 8 required developer lab services are defined."""
     ids = [s["id"] for s in DEFAULT_SERVICES]
     assert "adk_ui" in ids
     assert "study_coach" in ids
@@ -24,6 +24,7 @@ def test_default_services_configuration() -> None:
     assert "grafana" in ids
     assert "tempo" in ids
     assert "prometheus" in ids
+    assert "app_metrics" in ids
 
     # Check direct query param navigation URLs
     ops_svc = next(s for s in DEFAULT_SERVICES if s["id"] == "agent_ops")
@@ -108,11 +109,11 @@ def test_evaluate_service_status_offline() -> None:
 
 
 def test_get_all_services_status_list() -> None:
-    """Verifies get_all_services_status returns all 7 items."""
+    """Verifies get_all_services_status returns all 8 items."""
     with patch("study_coach.services.launcher.evaluate_service_status") as mock_eval:
         mock_eval.side_effect = lambda s: MagicMock(id=s["id"])
         statuses = get_all_services_status()
-        assert len(statuses) == 7
+        assert len(statuses) == 8
 
 
 def test_launcher_app_ui_rendering() -> None:

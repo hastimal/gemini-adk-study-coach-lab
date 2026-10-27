@@ -6,7 +6,7 @@ services:
     container_name: study-coach-workshop-ui
     ports:
       - "8501:8501"
-      - "8000:8000"
+      - "8001:8001"
     environment:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
@@ -15,7 +15,7 @@ services:
       - OTEL_SERVICE_NAME=study-coach
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
       - OTEL_EXPORTER_OTLP_PROTOCOL=http
-      - OTEL_METRICS_PORT=8000
+      - OTEL_METRICS_PORT=8001
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8501/_stcore/health" ]

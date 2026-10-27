@@ -33,8 +33,14 @@ jobs:
     - name: Set up Python
       run: uv python install 3.12
 
+    - name: Run PyPI README and Image Validation
+      run: uv run python scripts/validate_pypi_readme.py
+
     - name: Build wheel and sdist
       run: uv build
+
+    - name: Run Twine Strict Distribution Check
+      run: uvx twine check --strict dist/*
 
     - name: Store distribution artifacts
       uses: actions/upload-artifact@v4
