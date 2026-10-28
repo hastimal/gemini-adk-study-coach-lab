@@ -55,9 +55,10 @@ For full architectural specifications and sequence flows, see [Architecture Docu
 | Agent | Responsibility | Core Tools | Output Contract |
 | :--- | :--- | :--- | :--- |
 | **Study Coach** (`study_coach`) | Root coordinator routing student requests to specialist agents | `invoke_agent` | Conversation routing & delegation |
+| **Document AI** (`document_agent`) | Grounded Q&A over uploaded study guides (PDF/DOCX) with exact page/section citations | `search_uploaded_documents`, `list_session_documents` | `DocumentGroundingResult` (with verified citations) |
 | **Study Planner** (`study_planner`) | Builds sequential study schedules adhering to daily time budgets | `validate_study_plan`, `load_curriculum` | Validated `StudyPlan` model |
 | **Topic Expert** (`topic_expert`) | Explains certification topics with GCP practical scenarios | `get_topic_by_id`, `search_topics`, `get_related_topics` | Structured `TopicExplanation` model |
-| **Quiz Generator** (`quiz_generator`) | Generates 4-choice multiple-choice questions anchored in curriculum | `generate_quiz`, `validate_quiz_structure` | `Quiz` (with server-only answer keys) |
+| **Quiz Generator** (`quiz_generator`) | Generates 4-choice multiple-choice questions anchored in curriculum or uploaded guides | `generate_quiz`, `validate_quiz_structure` | `Quiz` (with server-only answer keys) |
 
 ---
 
@@ -351,14 +352,14 @@ uv run ruff check .
 uv run ruff format --check .
 uv run mypy .
 
-# Run all 188 unit, packaging, and deterministic agent evaluation tests
+# Run all 203 unit, packaging, and deterministic agent evaluation tests
 uv run pytest -q
 ```
 
-### Deterministic Agent Evaluation Regression Suite
-Run offline evaluations for planner time constraints, topic expert grounding, quiz answer-key isolation, deterministic grading, coordinator delegation, and failure category classification:
+### Deterministic Agent & Document RAG Regression Suite
+Run offline evaluations for planner time constraints, topic expert grounding, quiz answer-key isolation, deterministic grading, coordinator delegation, PDF/DOCX ingestion, and citation verification:
 ```bash
-uv run pytest tests/unit/test_agent_deterministic_evaluations.py -v
+uv run pytest tests/unit/test_agent_deterministic_evaluations.py tests/unit/test_document_rag_and_chat.py -v
 ```
 
 ### Opt-In Live Gemini Evaluations

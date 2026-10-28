@@ -1,5 +1,10 @@
-"""Models Package."""
-
+from study_coach.models.document import (
+    ChatMessage,
+    DocumentChunk,
+    DocumentCitation,
+    DocumentGroundingResult,
+    DocumentMetadata,
+)
 from study_coach.models.evaluation import (
     EvaluationScenarioResult,
     EvaluationSummaryReport,
@@ -18,6 +23,11 @@ from study_coach.models.study_plan import StudyActivity, StudyDay, StudyPlan
 from study_coach.models.topic_explanation import TopicExplanation
 
 __all__ = [
+    "ChatMessage",
+    "DocumentChunk",
+    "DocumentCitation",
+    "DocumentGroundingResult",
+    "DocumentMetadata",
     "EvaluationScenarioResult",
     "EvaluationSummaryReport",
     "LearningProgress",

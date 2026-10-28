@@ -1,6 +1,5 @@
-"""UI components package."""
-
 from ui.components.agent_ops import render_agent_ops_tab
+from ui.components.chat_view import render_study_coach_chat_tab
 from ui.components.evaluations_view import render_evaluations_tab
 from ui.components.resource_cards import (
     extract_url_hostname,
@@ -18,4 +17,5 @@ __all__ = [
     "render_evaluations_tab",
     "render_resource_card",
     "render_resource_grid",
+    "render_study_coach_chat_tab",
 ]

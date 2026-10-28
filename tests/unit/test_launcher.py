@@ -144,3 +144,9 @@ def test_direct_tab_navigation_in_study_coach() -> None:
     at_eval.query_params["tab"] = "eval"
     at_eval.run()
     assert at_eval.session_state.get("main_nav_tab") == "🧪 Evaluations"
+
+    # Test chat tab navigation
+    at_chat = AppTest.from_file(str(app_path), default_timeout=30)
+    at_chat.query_params["tab"] = "chat"
+    at_chat.run()
+    assert at_chat.session_state.get("main_nav_tab") == "💬 Ask Study Coach"

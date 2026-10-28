@@ -27,6 +27,7 @@ from ui.components import (
     render_agent_ops_tab,
     render_evaluations_tab,
     render_resource_grid,
+    render_study_coach_chat_tab,
 )
 
 # Load environment configuration
@@ -182,6 +183,7 @@ def navigate_to_practice_quiz_callback(target_topic_id: str) -> None:
 
 # Navigation Tabs
 MAIN_NAV_OPTIONS = [
+    "💬 Ask Study Coach",
     "📅 Study Plan",
     "📖 Learn Topic",
     "📝 Practice Quiz",
@@ -192,6 +194,11 @@ MAIN_NAV_OPTIONS = [
 
 # Query param direct navigation support
 TAB_QUERY_PARAM_MAP: dict[str, str] = {
+    "chat": "💬 Ask Study Coach",
+    "ask": "💬 Ask Study Coach",
+    "coach": "💬 Ask Study Coach",
+    "rag": "💬 Ask Study Coach",
+    "doc": "💬 Ask Study Coach",
     "plan": "📅 Study Plan",
     "study_plan": "📅 Study Plan",
     "learn": "📖 Learn Topic",
@@ -214,7 +221,7 @@ if requested_tab_param in TAB_QUERY_PARAM_MAP:
         st.session_state.main_nav_tab = target_tab_label
         st.session_state._last_synced_query_tab = requested_tab_param
 
-tab_plan, tab_learn, tab_quiz, tab_adaptive, tab_ops, tab_evals = st.tabs(
+tab_chat, tab_plan, tab_learn, tab_quiz, tab_adaptive, tab_ops, tab_evals = st.tabs(
     MAIN_NAV_OPTIONS,
     key="main_nav_tab",
     on_change="rerun",
@@ -222,6 +229,17 @@ tab_plan, tab_learn, tab_quiz, tab_adaptive, tab_ops, tab_evals = st.tabs(
 
 # Fetch current session state
 current_session = run_async(facade.get_session(session_id, user_id))
+
+# ==============================================================================
+# TAB 0: ASK STUDY COACH (CONVERSATIONAL AI + DOCUMENT RAG)
+# ==============================================================================
+with tab_chat:
+    render_study_coach_chat_tab(
+        facade=facade,
+        session_id=session_id,
+        user_id=user_id,
+        run_async_fn=run_async,
+    )
 
 # ==============================================================================
 # TAB 1: STUDY PLAN
