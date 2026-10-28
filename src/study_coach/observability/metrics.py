@@ -137,8 +137,12 @@ def init_metrics() -> None:
     QUIZ_SUBMISSIONS_TOTAL.labels(quiz_type="quick_check")
     QUIZ_SUBMISSIONS_TOTAL.labels(quiz_type="practice_quiz")
     AGENT_CALLS_TOTAL.labels(agent="document_agent", model=GEMINI_MODEL)
-    DOCUMENT_OPERATIONS_TOTAL.labels(operation="upload", file_type="pdf", status="success")
-    DOCUMENT_OPERATIONS_TOTAL.labels(operation="search", file_type="all", status="success")
+    DOCUMENT_OPERATIONS_TOTAL.labels(
+        operation="upload", file_type="pdf", status="success"
+    )
+    DOCUMENT_OPERATIONS_TOTAL.labels(
+        operation="search", file_type="all", status="success"
+    )
     CHAT_MESSAGES_TOTAL.labels(role="student", routed_agent="coordinator")
     CHAT_MESSAGES_TOTAL.labels(role="coach", routed_agent="document_agent")
 

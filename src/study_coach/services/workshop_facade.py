@@ -18,6 +18,7 @@ from study_coach.observability import (
 from study_coach.services.learning_session import LearningSessionService
 from study_coach.tools.curriculum_tools import load_curriculum
 from study_coach.workflows.adaptive_study import AdaptiveStudyWorkflow
+from study_coach.workflows.coach_chat import ConversationalCoachWorkflow
 
 
 class WorkshopFacade:
@@ -30,11 +31,16 @@ class WorkshopFacade:
         self,
         session_service: LearningSessionService | None = None,
         workflow: AdaptiveStudyWorkflow | None = None,
+        coach_workflow: ConversationalCoachWorkflow | None = None,
         observability_plugin: ADKObservabilityPlugin | None = None,
     ) -> None:
         self.session_service = session_service or LearningSessionService()
         self.observability_plugin = observability_plugin or ADKObservabilityPlugin()
         self.workflow = workflow or AdaptiveStudyWorkflow(
+            session_service=self.session_service,
+            observability_plugin=self.observability_plugin,
+        )
+        self.coach_workflow = coach_workflow or ConversationalCoachWorkflow(
             session_service=self.session_service,
             observability_plugin=self.observability_plugin,
         )
@@ -253,3 +259,75 @@ class WorkshopFacade:
         from study_coach.data.code_examples_registry import get_examples_for_topic
 
         return get_examples_for_topic(topic_id)
+
+    # ==========================================================================
+    # CONVERSATIONAL COACH & DOCUMENT RAG
+    # ==========================================================================
+
+    async def upload_document(
+        self,
+        session_id: str,
+        user_id: str,
+        filename: str,
+        file_bytes: bytes,
+    ) -> Any:
+        """Parses and indexes an uploaded study guide document."""
+        return await self.coach_workflow.ingest_document(
+            session_id=session_id,
+            user_id=user_id,
+            filename=filename,
+            file_bytes=file_bytes,
+        )
+
+    async def list_documents(self, session_id: str) -> list[Any]:
+        """Lists active uploaded documents in the session index."""
+        return await self.coach_workflow.list_documents(session_id=session_id)
+
+    async def delete_document(self, session_id: str, user_id: str, doc_id: str) -> bool:
+        """Removes an uploaded document from the active session index."""
+        return await self.coach_workflow.delete_document(
+            session_id=session_id, user_id=user_id, doc_id=doc_id
+        )
+
+    async def query_documents(self, session_id: str, user_id: str, query: str) -> Any:
+        """Queries uploaded study guides and returns grounded answers with citations."""
+        return await self.coach_workflow.query_documents(
+            session_id=session_id, user_id=user_id, query=query
+        )
+
+    async def generate_document_quiz(
+        self,
+        session_id: str,
+        user_id: str,
+        question_count: int = 5,
+        target_doc_id: str | None = None,
+        experience_level: str = "intermediate",
+    ) -> list[StudentQuizQuestion]:
+        """Generates multiple-choice practice quiz questions grounded in uploaded documents."""
+        return await self.coach_workflow.generate_document_quiz(
+            session_id=session_id,
+            user_id=user_id,
+            question_count=question_count,
+            target_doc_id=target_doc_id,
+            experience_level=experience_level,
+        )
+
+    async def send_chat_message(
+        self, session_id: str, user_id: str, message: str
+    ) -> Any:
+        """Sends student message through multi-agent coach routing and records conversation."""
+        return await self.coach_workflow.process_chat_message(
+            session_id=session_id, user_id=user_id, student_message=message
+        )
+
+    async def get_chat_history(self, session_id: str, user_id: str) -> list[Any]:
+        """Retrieves conversational message history for the session."""
+        return await self.coach_workflow.get_chat_history(
+            session_id=session_id, user_id=user_id
+        )
+
+    async def clear_chat_history(self, session_id: str, user_id: str) -> None:
+        """Clears conversational message history for the session."""
+        await self.coach_workflow.clear_chat_history(
+            session_id=session_id, user_id=user_id
+        )

@@ -1,7 +1,8 @@
 """Domain models for Document AI, chunking, citations, and conversation history."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any, Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -54,7 +55,7 @@ class DocumentMetadata(BaseModel):
     )
     total_chunks: int = Field(default=0, ge=0, description="Total extracted chunks")
     uploaded_at: datetime = Field(
-        default_factory=lambda: datetime.now(timezone.utc),
+        default_factory=lambda: datetime.now(UTC),
         description="Upload timestamp",
     )
     char_count: int = Field(default=0, ge=0)
@@ -90,7 +91,7 @@ class ChatMessage(BaseModel):
         ..., description="Role of the message sender"
     )
     content: str = Field(..., description="Message text or markdown")
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
     agent_routed: str | None = Field(
         default=None,
         description="Agent that produced this response (e.g. topic_expert, document_agent, quiz_generator)",

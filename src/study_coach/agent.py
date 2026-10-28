@@ -1,6 +1,5 @@
 from google.adk import Agent
 
-from study_coach.agents.document_agent import document_agent
 from study_coach.agents.quiz_generator import quiz_generator
 from study_coach.agents.study_planner import study_planner
 from study_coach.agents.topic_expert import topic_expert
@@ -32,7 +31,7 @@ root_agent = Agent(
         "7. Follow-up Questions & Chat Continuity: Maintain conversation context across turns. If the student answers "
         "a follow-up question or asks for clarification, continue the dialogue helpfully."
     ),
-    sub_agents=[study_planner, topic_expert, quiz_generator, document_agent],
+    sub_agents=[study_planner, topic_expert, quiz_generator],
 )
 
 study_coach = root_agent

@@ -10,8 +10,8 @@ import re
 import uuid
 from typing import BinaryIO
 
-from pypdf import PdfReader
 import docx
+from pypdf import PdfReader
 
 from study_coach.models.document import DocumentChunk, DocumentMetadata
 
@@ -45,7 +45,9 @@ def validate_upload(filename: str, file_bytes: bytes) -> tuple[str, str]:
     return doc_id, ext
 
 
-def parse_pdf(file_stream: BinaryIO, doc_id: str, filename: str) -> tuple[DocumentMetadata, list[DocumentChunk]]:
+def parse_pdf(
+    file_stream: BinaryIO, doc_id: str, filename: str
+) -> tuple[DocumentMetadata, list[DocumentChunk]]:
     """Extracts text from PDF, recording page numbers and creating chunks."""
     try:
         reader = PdfReader(file_stream)
@@ -89,7 +91,9 @@ def parse_pdf(file_stream: BinaryIO, doc_id: str, filename: str) -> tuple[Docume
         raise DocumentParseError(f"Failed to parse PDF '{filename}': {exc}") from exc
 
 
-def parse_docx(file_stream: BinaryIO, doc_id: str, filename: str) -> tuple[DocumentMetadata, list[DocumentChunk]]:
+def parse_docx(
+    file_stream: BinaryIO, doc_id: str, filename: str
+) -> tuple[DocumentMetadata, list[DocumentChunk]]:
     """Extracts text from DOCX, tracking headings and section titles."""
     try:
         doc = docx.Document(file_stream)
@@ -173,10 +177,14 @@ def parse_plain_text(
         )
         return metadata, chunks
     except Exception as exc:
-        raise DocumentParseError(f"Failed to parse text document '{filename}': {exc}") from exc
+        raise DocumentParseError(
+            f"Failed to parse text document '{filename}': {exc}"
+        ) from exc
 
 
-def parse_uploaded_file(filename: str, file_bytes: bytes) -> tuple[DocumentMetadata, list[DocumentChunk]]:
+def parse_uploaded_file(
+    filename: str, file_bytes: bytes
+) -> tuple[DocumentMetadata, list[DocumentChunk]]:
     """Unified entrypoint to validate and parse an uploaded file stream."""
     doc_id, ext = validate_upload(filename, file_bytes)
     stream = io.BytesIO(file_bytes)

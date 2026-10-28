@@ -2,11 +2,12 @@
 
 from typing import Any
 
-from study_coach.models.document import DocumentCitation
 from study_coach.rag.index import document_index_registry
 
 
-def search_uploaded_documents(query: str, session_id: str, top_k: int = 4) -> dict[str, Any]:
+def search_uploaded_documents(
+    query: str, session_id: str, top_k: int = 4
+) -> dict[str, Any]:
     """Searches uploaded study guide documents in the active session for relevant passages.
 
     Args:

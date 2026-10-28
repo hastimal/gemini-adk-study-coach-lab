@@ -8,7 +8,10 @@ from google.adk import Agent
 
 from study_coach.config import GEMINI_MODEL
 from study_coach.models.document import DocumentGroundingResult
-from study_coach.tools.document_tools import list_session_documents, search_uploaded_documents
+from study_coach.tools.document_tools import (
+    list_session_documents,
+    search_uploaded_documents,
+)
 
 document_agent = Agent(
     name="document_agent",

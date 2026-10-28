@@ -77,10 +77,11 @@ For full CLI documentation, see [CLI Reference](https://github.com/hastimal/gemi
 
 ## Key Capabilities
 
-- **ADK Multi-Agent Orchestration**: A root **Study Coach Coordinator** coordinates three specialist sub-agents using official Google ADK primitives:
+- **ADK Multi-Agent Orchestration**: A root **Study Coach Coordinator** coordinates specialist sub-agents using official Google ADK primitives:
+  - **Document AI Agent**: Delivers grounded answers over uploaded study guides (PDF/DOCX) with exact page/section citations.
   - **Study Planner Agent**: Constructs sequential study schedules adhering strictly to daily time budgets (≤ N min).
   - **Topic Expert Agent**: Delivers structured lessons with beginner/intermediate/advanced depth, architecture diagrams, and runnable Python examples.
-  - **Quiz Generator Agent**: Generates 4-choice grounded multiple-choice questions anchored in the curriculum.
+  - **Quiz Generator Agent**: Generates 4-choice grounded multiple-choice questions anchored in the curriculum or uploaded guides.
 - **Deterministic Python Verification**: Scoring, answer evaluation, and time calculations run in 100% pure Python—eliminating LLM hallucination in quantitative grading.
 - **Client-Side Answer Masking**: Private answer keys and explanations remain securely on the server until student submission.
 - **Adaptive Remediation**: Scoring below 70% automatically triggers weak-topic identification and offers dynamic study plan rebalancing.

@@ -8,9 +8,12 @@ for local workshops and offline CI/CD test runs.
 import math
 import re
 from collections import Counter
-from typing import Any
 
-from study_coach.models.document import DocumentChunk, DocumentCitation, DocumentMetadata
+from study_coach.models.document import (
+    DocumentChunk,
+    DocumentCitation,
+    DocumentMetadata,
+)
 
 
 class LocalDocumentIndex:
@@ -23,7 +26,9 @@ class LocalDocumentIndex:
         self._doc_frequencies: Counter[str] = Counter()
         self._total_chunks: int = 0
 
-    def add_document(self, metadata: DocumentMetadata, chunks: list[DocumentChunk]) -> None:
+    def add_document(
+        self, metadata: DocumentMetadata, chunks: list[DocumentChunk]
+    ) -> None:
         """Adds a document and its chunks into the session index."""
         # Replace if existing
         if metadata.doc_id in self.documents:
@@ -78,7 +83,8 @@ class LocalDocumentIndex:
         )
 
         avg_chunk_len = (
-            sum(len(_tokenize(c.content)) for c in candidate_chunks) / len(candidate_chunks)
+            sum(len(_tokenize(c.content)) for c in candidate_chunks)
+            / len(candidate_chunks)
             if candidate_chunks
             else 1.0
         )
@@ -115,7 +121,9 @@ class LocalDocumentIndex:
         scored_chunks.sort(key=lambda x: x[1], reverse=True)
         return scored_chunks[:top_k]
 
-    def build_citations(self, scored_chunks: list[tuple[DocumentChunk, float]]) -> list[DocumentCitation]:
+    def build_citations(
+        self, scored_chunks: list[tuple[DocumentChunk, float]]
+    ) -> list[DocumentCitation]:
         """Creates verifiable DocumentCitation models from retrieved chunks."""
         citations: list[DocumentCitation] = []
         for chunk, _ in scored_chunks:
@@ -168,10 +176,43 @@ document_index_registry = DocumentIndexRegistry()
 
 
 _STOPWORDS = {
-    "a", "an", "the", "and", "or", "in", "on", "at", "to", "for", "with",
-    "by", "from", "of", "is", "are", "was", "were", "what", "how", "why",
-    "which", "who", "when", "where", "this", "that", "these", "those", "can",
-    "does", "do", "explain", "describe", "tell", "me", "about"
+    "a",
+    "an",
+    "the",
+    "and",
+    "or",
+    "in",
+    "on",
+    "at",
+    "to",
+    "for",
+    "with",
+    "by",
+    "from",
+    "of",
+    "is",
+    "are",
+    "was",
+    "were",
+    "what",
+    "how",
+    "why",
+    "which",
+    "who",
+    "when",
+    "where",
+    "this",
+    "that",
+    "these",
+    "those",
+    "can",
+    "does",
+    "do",
+    "explain",
+    "describe",
+    "tell",
+    "me",
+    "about",
 }
 
 
