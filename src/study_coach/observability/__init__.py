@@ -17,6 +17,9 @@ from study_coach.observability.metrics import (
     REQUEST_DURATION_SECONDS,
     REQUESTS_TOTAL,
     TOOL_CALLS_TOTAL,
+    CHAT_MESSAGES_TOTAL,
+    DOCUMENT_OPERATIONS_TOTAL,
+    DOCUMENT_RETRIEVAL_LATENCY_SECONDS,
     start_metrics_server,
     study_coach_registry,
 )
@@ -29,6 +32,9 @@ from study_coach.observability.tracing import (
 __all__ = [
     "AGENT_CALLS_TOTAL",
     "AGENT_ERRORS_TOTAL",
+    "CHAT_MESSAGES_TOTAL",
+    "DOCUMENT_OPERATIONS_TOTAL",
+    "DOCUMENT_RETRIEVAL_LATENCY_SECONDS",
     "MODEL_INPUT_TOKENS_TOTAL",
     "MODEL_OUTPUT_TOKENS_TOTAL",
     "QUIZ_GENERATION_DURATION_SECONDS",

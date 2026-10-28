@@ -80,6 +80,28 @@ REPLANNING_TOTAL = Counter(
     registry=study_coach_registry,
 )
 
+# 9. Document RAG operations
+DOCUMENT_OPERATIONS_TOTAL = Counter(
+    "study_coach_document_operations_total",
+    "Total document operations performed in active sessions.",
+    ["operation", "file_type", "status"],
+    registry=study_coach_registry,
+)
+
+DOCUMENT_RETRIEVAL_LATENCY_SECONDS = Histogram(
+    "study_coach_document_retrieval_latency_seconds",
+    "Latency of local document search and chunk retrieval.",
+    buckets=(0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0),
+    registry=study_coach_registry,
+)
+
+CHAT_MESSAGES_TOTAL = Counter(
+    "study_coach_chat_messages_total",
+    "Total multi-turn chat messages processed by Study Coach.",
+    ["role", "routed_agent"],
+    registry=study_coach_registry,
+)
+
 
 # Optional model token counters (only incremented when actual token metadata is returned)
 MODEL_INPUT_TOKENS_TOTAL = Counter(
@@ -114,6 +136,11 @@ def init_metrics() -> None:
     TOOL_CALLS_TOTAL.labels(tool="validate_study_plan", status="success")
     QUIZ_SUBMISSIONS_TOTAL.labels(quiz_type="quick_check")
     QUIZ_SUBMISSIONS_TOTAL.labels(quiz_type="practice_quiz")
+    AGENT_CALLS_TOTAL.labels(agent="document_agent", model=GEMINI_MODEL)
+    DOCUMENT_OPERATIONS_TOTAL.labels(operation="upload", file_type="pdf", status="success")
+    DOCUMENT_OPERATIONS_TOTAL.labels(operation="search", file_type="all", status="success")
+    CHAT_MESSAGES_TOTAL.labels(role="student", routed_agent="coordinator")
+    CHAT_MESSAGES_TOTAL.labels(role="coach", routed_agent="document_agent")
 
 
 def start_metrics_server(port: int | None = None) -> bool:
