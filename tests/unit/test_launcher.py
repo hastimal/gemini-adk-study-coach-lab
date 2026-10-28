@@ -150,3 +150,17 @@ def test_direct_tab_navigation_in_study_coach() -> None:
     at_chat.query_params["tab"] = "chat"
     at_chat.run()
     assert at_chat.session_state.get("main_nav_tab") == "💬 Ask Study Coach"
+
+
+def test_run_local_script_entrypoint_selection() -> None:
+    """Verifies scripts/run_local.sh invokes ui/app.py for streamlit run and avoids ui/server.py duplicate runtimes."""
+    script_path = (
+        Path(__file__).resolve().parent.parent.parent / "scripts" / "run_local.sh"
+    )
+    assert script_path.exists(), "scripts/run_local.sh must exist"
+    content = script_path.read_text(encoding="utf-8")
+
+    # Ensure streamlit run executes ui/app.py directly
+    assert "streamlit run ui/app.py" in content
+    # Ensure ui/server.py is not called via streamlit run to prevent RuntimeError: Runtime instance already exists!
+    assert "streamlit run ui/server.py" not in content
