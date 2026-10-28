@@ -79,11 +79,12 @@ gemini-adk-study-coach-lab start --port 8501 --headless --address 0.0.0.0
 ### `doctor`
 Performs comprehensive diagnostic checks on your environment, verifying:
 - Python runtime version ($\ge 3.12$)
+- `uv` package manager availability and version (with actionable install link if missing)
 - Package installation location and version
 - Bundled resources (curriculum YAML, learning catalog, provider registry, UI app, SVG icons)
 - Gemini API key configuration (with masked display for privacy)
 - Default Gemini model configuration
-- Local port availability (8501, 8000, 8500)
+- Local port availability (8501, 8000, 8001, 8500)
 - Optional Docker availability (for telemetry stack)
 
 ```bash
@@ -94,7 +95,7 @@ gemini-adk-study-coach-lab doctor
 Displays installed package version:
 ```bash
 gemini-adk-study-coach-lab version
-# Output: gemini-adk-study-coach-lab 1.1.1
+# Output: gemini-adk-study-coach-lab 1.2.0
 ```
 
 ### `--help`

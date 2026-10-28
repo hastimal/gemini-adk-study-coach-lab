@@ -1,6 +1,6 @@
 [project]
 name = "gemini-adk-study-coach-lab"
-version = "1.1.2"
+version = "1.2.0"
 description = "AI Study Coach helping students prepare for technical certifications"
 readme = "README-pypi.md"
 license = { text = "MIT" }

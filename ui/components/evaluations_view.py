@@ -122,6 +122,10 @@ def render_evaluations_tab(runner: EvaluationRunner, run_async_fn: Any) -> None:
                 st.markdown(f"**Description:** {scenario.scenario_description}")
                 st.markdown(f"**Target Agent:** `{scenario.target_agent}`")
                 st.markdown(f"**Status:** `{scenario.status}`")
+                if scenario.failure_category and scenario.failure_category != "none":
+                    st.markdown(
+                        f"**Failure Category:** :red-background[`{scenario.failure_category}`]"
+                    )
                 st.markdown(f"**Measured Latency:** `{scenario.duration_seconds:.2f}s`")
 
                 if scenario.details:

@@ -43,6 +43,10 @@ class LearningSession(BaseModel):
     completed_topics: list[str] = Field(default_factory=list)
     plan_revision: int = Field(default=1, ge=1)
     learning_progress: LearningProgress = Field(default_factory=LearningProgress)
+    metadata: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Extensible metadata storage for conversation history, documents, and tool state.",
+    )
 
     @model_validator(mode="after")
     def validate_session(self) -> "LearningSession":

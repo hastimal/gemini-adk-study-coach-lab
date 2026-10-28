@@ -120,7 +120,30 @@ def cmd_doctor(args: argparse.Namespace) -> int:
         print(f"  [ERROR] Python Runtime: v{py_ver} (Python >= 3.12 is required)")
         has_critical_failure = True
 
-    # 2. Package Installation Check
+    # 2. uv Package Manager Check
+    uv_bin = shutil.which("uv")
+    if uv_bin:
+        try:
+            uv_ver_res = subprocess.run(
+                ["uv", "--version"],
+                capture_output=True,
+                text=True,
+                check=False,
+                timeout=2.0,
+            )
+            uv_ver = (
+                uv_ver_res.stdout.strip() if uv_ver_res.returncode == 0 else "detected"
+            )
+            print(f"  [OK] uv Package Manager: {uv_ver} ({uv_bin})")
+        except (subprocess.SubprocessError, OSError):
+            print(f"  [OK] uv Package Manager: Detected ({uv_bin})")
+    else:
+        print("  [INFO] uv Package Manager: Not found in PATH.")
+        print(
+            "         Recommended for ultra-fast zero-clone tool execution: https://docs.astral.sh/uv/"
+        )
+
+    # 3. Package Installation Check
     version = get_version()
     package_location = "Local checkout / editable"
     try:
