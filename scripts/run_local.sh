@@ -35,7 +35,7 @@ fi
 # App-only standalone workflow
 if [ "$1" = "--app-only" ]; then
     echo "Starting Streamlit Study Coach on port ${APP_PORT}..."
-    exec uv run streamlit run ui/server.py --server.port "${APP_PORT}"
+    exec uv run streamlit run ui/app.py --server.port "${APP_PORT}"
 fi
 
 # Full-demo workflow: launches Study Coach in background, then Launcher in foreground
@@ -49,7 +49,7 @@ if [ "$1" = "--full-demo" ]; then
         echo "ℹ️  Streamlit Study Coach is already listening on port ${APP_PORT}."
     else
         echo "Starting Streamlit Study Coach (port ${APP_PORT}) in background..."
-        uv run streamlit run ui/server.py --server.port "${APP_PORT}" --server.headless true &
+        uv run streamlit run ui/app.py --server.port "${APP_PORT}" --server.headless true &
         STUDY_COACH_PID=$!
         trap "echo 'Stopping background Study Coach...'; kill ${STUDY_COACH_PID} 2>/dev/null || true" EXIT INT TERM
         
