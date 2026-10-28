@@ -8,16 +8,17 @@ This document explains the evaluation methodology, dataset fixtures, Google ADK 
 
 To ensure high quality, deterministic reliability, and rigorous AI safety, evaluation is split into two distinct tiers:
 
-1. **Deterministic Pytest Contract Tests (`tests/eval/`)**:
-   - Fast, reproducible, non-networked unit and schema contract evaluations executed in CI/CD.
-   - Validates Pydantic schema validation, daily minute limit invariants, option counts, answer key protection, intent routing heuristics, and unknown topic handling.
-   - Run command: `uv run pytest tests/eval/ -q` (19 passed tests).
+1. **Deterministic Pytest Contract & Agent Regression Tests (`tests/unit/`, `tests/eval/`)**:
+   - Fast, reproducible, non-networked unit, schema contract, and agent regression evaluations executed in CI/CD.
+   - Validates Pydantic schema validation, daily minute limit invariants, option counts, answer key protection, intent routing heuristics, weak topic identification, adaptive replanning, and failure category taxonomy (`timeout`, `schema_validation`, `constraint_violation`, `missing_credentials`, `unhandled_exception`).
+   - Run command: `uv run pytest -q` (188 passed tests).
+   - Dedicated agent regression command: `uv run pytest tests/unit/test_agent_deterministic_evaluations.py -v` (15 passed tests).
 
-2. **Live Google ADK Model Evaluations (`tests/eval/run_live_evaluation.py`)**:
+2. **Opt-In Live Google ADK Model Evaluations (`tests/eval/run_live_evaluation.py`)**:
    - Real Gemini API requests evaluated through Google ADK agents using `InMemoryRunner`.
    - Instrumented with `ADKObservabilityPlugin` to export distributed traces to Tempo and Prometheus metrics.
    - Evaluates multi-turn agent response formatting, tool execution traces, key concept completeness, question generation quality, and latency.
-   - Run command: `uv run python tests/eval/run_live_evaluation.py` (4/4 passed scenarios).
+   - Run command: `uv run python tests/eval/run_live_evaluation.py` (opt-in; skipped in normal CI).
 
 ---
 

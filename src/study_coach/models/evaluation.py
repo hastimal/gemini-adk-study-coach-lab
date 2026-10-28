@@ -11,6 +11,18 @@ class EvaluationScenarioResult(BaseModel):
     scenario_description: str
     target_agent: str
     status: Literal["PASS", "FAIL"]
+    failure_category: (
+        Literal[
+            "none",
+            "schema_validation",
+            "constraint_violation",
+            "missing_credentials",
+            "timeout",
+            "unhandled_exception",
+            "curriculum_grounding",
+        ]
+        | None
+    ) = None
     duration_seconds: float = Field(ge=0.0)
     details: str
     error: str | None = None

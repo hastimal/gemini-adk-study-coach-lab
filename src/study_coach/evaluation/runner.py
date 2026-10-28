@@ -128,6 +128,7 @@ class EvaluationRunner:
                 scenario_description=desc,
                 target_agent=target_agent,
                 status="PASS",
+                failure_category="none",
                 duration_seconds=round(duration, 2),
                 details=f"Topic '{explanation.topic_title}' generated successfully. Key concepts: {concepts_sample}.",
                 metadata={
@@ -136,11 +137,32 @@ class EvaluationRunner:
                     "objective_count": len(explanation.learning_objectives),
                 },
             )
+        except TimeoutError as err:
+            duration = time.time() - start
+            return EvaluationScenarioResult(
+                scenario_id=scenario_id,
+                scenario_description=desc,
+                target_agent=target_agent,
+                status="FAIL",
+                failure_category="timeout",
+                duration_seconds=round(duration, 2),
+                details="Topic Expert execution timed out.",
+                error=str(err),
+            )
+        except (ValueError, AssertionError) as err:
+            duration = time.time() - start
+            return EvaluationScenarioResult(
+                scenario_id=scenario_id,
+                scenario_description=desc,
+                target_agent=target_agent,
+                status="FAIL",
+                failure_category="schema_validation",
+                duration_seconds=round(duration, 2),
+                details="Topic Expert returned invalid schema or insufficient concepts.",
+                error=str(err),
+            )
         except (
             RuntimeError,
-            ValueError,
-            AssertionError,
-            TimeoutError,
             OSError,
         ) as err:
             duration = time.time() - start
@@ -149,6 +171,7 @@ class EvaluationRunner:
                 scenario_description=desc,
                 target_agent=target_agent,
                 status="FAIL",
+                failure_category="unhandled_exception",
                 duration_seconds=round(duration, 2),
                 details="Failed to generate structured topic explanation.",
                 error=str(err),
@@ -196,15 +219,37 @@ class EvaluationRunner:
                 scenario_description=desc,
                 target_agent=target_agent,
                 status="PASS",
+                failure_category="none",
                 duration_seconds=round(duration, 2),
                 details="3 formative MCQs successfully generated with all 4 options sanitized.",
                 metadata={"question_count": len(questions)},
             )
+        except TimeoutError as err:
+            duration = time.time() - start
+            return EvaluationScenarioResult(
+                scenario_id=scenario_id,
+                scenario_description=desc,
+                target_agent=target_agent,
+                status="FAIL",
+                failure_category="timeout",
+                duration_seconds=round(duration, 2),
+                details="Quiz Generator execution timed out.",
+                error=str(err),
+            )
+        except (ValueError, AssertionError) as err:
+            duration = time.time() - start
+            return EvaluationScenarioResult(
+                scenario_id=scenario_id,
+                scenario_description=desc,
+                target_agent=target_agent,
+                status="FAIL",
+                failure_category="schema_validation",
+                duration_seconds=round(duration, 2),
+                details="Quiz questions did not meet schema constraints.",
+                error=str(err),
+            )
         except (
             RuntimeError,
-            ValueError,
-            AssertionError,
-            TimeoutError,
             OSError,
         ) as err:
             duration = time.time() - start
@@ -213,6 +258,7 @@ class EvaluationRunner:
                 scenario_description=desc,
                 target_agent=target_agent,
                 status="FAIL",
+                failure_category="unhandled_exception",
                 duration_seconds=round(duration, 2),
                 details="Failed to generate formative MCQs.",
                 error=str(err),
@@ -264,6 +310,7 @@ class EvaluationRunner:
                 scenario_description=desc,
                 target_agent=target_agent,
                 status="PASS",
+                failure_category="none",
                 duration_seconds=round(duration, 2),
                 details="7-day study plan generated strictly respecting 45 min/day budget.",
                 metadata={
@@ -271,11 +318,32 @@ class EvaluationRunner:
                     "total_minutes": plan.total_planned_minutes,
                 },
             )
+        except TimeoutError as err:
+            duration = time.time() - start
+            return EvaluationScenarioResult(
+                scenario_id=scenario_id,
+                scenario_description=desc,
+                target_agent=target_agent,
+                status="FAIL",
+                failure_category="timeout",
+                duration_seconds=round(duration, 2),
+                details="Study Planner execution timed out.",
+                error=str(err),
+            )
+        except (ValueError, AssertionError) as err:
+            duration = time.time() - start
+            return EvaluationScenarioResult(
+                scenario_id=scenario_id,
+                scenario_description=desc,
+                target_agent=target_agent,
+                status="FAIL",
+                failure_category="constraint_violation",
+                duration_seconds=round(duration, 2),
+                details="Study plan violated schedule constraints or daily study budget.",
+                error=str(err),
+            )
         except (
             RuntimeError,
-            ValueError,
-            AssertionError,
-            TimeoutError,
             OSError,
         ) as err:
             duration = time.time() - start
@@ -284,6 +352,7 @@ class EvaluationRunner:
                 scenario_description=desc,
                 target_agent=target_agent,
                 status="FAIL",
+                failure_category="unhandled_exception",
                 duration_seconds=round(duration, 2),
                 details="Failed to generate budget-compliant study plan.",
                 error=str(err),
@@ -350,15 +419,37 @@ class EvaluationRunner:
                 scenario_description=desc,
                 target_agent=target_agent,
                 status="PASS",
+                failure_category="none",
                 duration_seconds=round(duration, 2),
                 details=f"Root coordinator routed & answered ({len(response_text)} chars response).",
                 metadata={"response_chars": len(response_text)},
             )
+        except TimeoutError as err:
+            duration = time.time() - start
+            return EvaluationScenarioResult(
+                scenario_id=scenario_id,
+                scenario_description=desc,
+                target_agent=target_agent,
+                status="FAIL",
+                failure_category="timeout",
+                duration_seconds=round(duration, 2),
+                details="Root coordinator execution timed out.",
+                error=str(err),
+            )
+        except (ValueError, AssertionError) as err:
+            duration = time.time() - start
+            return EvaluationScenarioResult(
+                scenario_id=scenario_id,
+                scenario_description=desc,
+                target_agent=target_agent,
+                status="FAIL",
+                failure_category="schema_validation",
+                duration_seconds=round(duration, 2),
+                details="Root coordinator returned empty or invalid response.",
+                error=str(err),
+            )
         except (
             RuntimeError,
-            ValueError,
-            AssertionError,
-            TimeoutError,
             OSError,
         ) as err:
             duration = time.time() - start
@@ -367,6 +458,7 @@ class EvaluationRunner:
                 scenario_description=desc,
                 target_agent=target_agent,
                 status="FAIL",
+                failure_category="unhandled_exception",
                 duration_seconds=round(duration, 2),
                 details="Root coordinator failed to route or respond.",
                 error=str(err),
@@ -411,6 +503,7 @@ class EvaluationRunner:
                         scenario_description="Credential validation gate",
                         target_agent="auth",
                         status="FAIL",
+                        failure_category="missing_credentials",
                         duration_seconds=0.0,
                         details="Credential check failed before agent execution.",
                         error=err_msg,

@@ -341,7 +341,7 @@ Complete documentation is available in `docs/workshop/` for organizing a 60-minu
 
 ---
 
-## 14. Testing & Quality Assurance
+## 15. Testing & Quality Assurance
 
 Run the complete deterministic test suite and linters:
 
@@ -351,18 +351,26 @@ uv run ruff check .
 uv run ruff format --check .
 uv run mypy .
 
-# Run all 156 unit and integration tests
+# Run all 188 unit, packaging, and deterministic agent evaluation tests
 uv run pytest -q
 ```
 
-To run the live Gemini multi-agent evaluation scenarios:
+### Deterministic Agent Evaluation Regression Suite
+Run offline evaluations for planner time constraints, topic expert grounding, quiz answer-key isolation, deterministic grading, coordinator delegation, and failure category classification:
 ```bash
+uv run pytest tests/unit/test_agent_deterministic_evaluations.py -v
+```
+
+### Opt-In Live Gemini Evaluations
+Live model evaluations require explicit network credentials and are intentionally opt-in (not executed during ordinary CI):
+```bash
+# Opt-in live evaluation script
 uv run python tests/eval/run_live_evaluation.py
 ```
 
 ---
 
-## 15. Security & Privacy
+## 16. Security & Privacy
 
 1. **Answer-Key Protection**: Questions delivered to the browser never include ground-truth answer keys or internal explanations.
 2. **Deterministic Grading**: All quiz scoring is evaluated server-side in deterministic Python code.
@@ -372,15 +380,15 @@ uv run python tests/eval/run_live_evaluation.py
 
 ---
 
-## 16. Current Limitations (v1.0.0)
+## 17. Current Limitations (v1.2.0)
 
-- **Curriculum Scope**: Grounded in the Google Cloud Generative AI Leader certification syllabus. Custom track authoring is scheduled for post-v1.0.0.
-- **Session Persistence**: Sessions are tracked in-memory using ADK `InMemorySessionService`; restarting the Streamlit server resets active student sessions.
-- **Live Gemini Requirements**: Interactive plan generation and topic teaching require an active Gemini API key with available quota.
+- **Curriculum Scope**: Grounded in the Google Cloud Generative AI Leader certification syllabus. Custom track authoring is scheduled for post-v1.2.0.
+- **Session Persistence**: Sessions are tracked in-memory using ADK `InMemorySessionService`; restarting the Streamlit server resets active student sessions. (State schema extension point `metadata` added in v1.2.0).
+- **Live Gemini Requirements**: Interactive plan generation and topic teaching require an active Gemini API key with available quota. Offline CI evaluations run deterministically without network calls.
 
 ---
 
-## 17. Future Feature Roadmap (Post-v1.0.0)
+## 18. Future Feature Roadmap
 
 > Detailed technical specifications, domain models, and phasing are documented in [docs/roadmap.md](docs/roadmap.md).
 
