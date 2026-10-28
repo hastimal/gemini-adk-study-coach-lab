@@ -10,7 +10,7 @@ Provides:
 """
 
 from collections.abc import Callable
-from typing import Any
+from typing import Any, Literal, cast
 
 import streamlit as st
 
@@ -174,9 +174,13 @@ def render_study_coach_chat_tab(
                         "Please select answers for all questions before submitting."
                     )
                 else:
+                    typed_answers: dict[str, Literal["A", "B", "C", "D"]] = {
+                        k: cast(Literal["A", "B", "C", "D"], v)
+                        for k, v in doc_selections.items()
+                    }
                     submission = QuizSubmission(
                         quiz_id="default_quiz",
-                        student_answers=doc_selections,
+                        student_answers=typed_answers,
                     )
                     with st.spinner("Deterministically grading answers..."):
                         try:
